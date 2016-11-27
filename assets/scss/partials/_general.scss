@@ -1,0 +1,48 @@
+body {
+  font: 16px/1.5 $font-family-sans;
+}
+
+h1, h2 {
+  font-family: $font-family-serif;
+  letter-spacing: 1px;
+  font-size: 2rem;
+}
+
+p {
+  margin-bottom: 1.25em;
+}
+
+button {
+  padding: 1em;
+  border-radius: 4px;
+  background-color: $offset-background;
+  border: 1px solid $mid-gray;
+  font-weight: $font-bold;
+  font-size: 1em;
+  outline: none;
+
+  &:active {
+    transform: translate3d(1px, 1px, 0);
+  }
+}
+
+input {
+  font-size: 1em;
+  padding: 1em 0.5em;
+  border: 1px solid $light-gray;
+  display: inline-block;
+  border-radius: 4px;
+  outline: 1px $blue;
+}
+
+li {
+  list-style: none;
+}
+
+.is-hidden {
+  display: none;
+}
+
+.content {
+  padding: 0 calc(1em + 1vw);
+}

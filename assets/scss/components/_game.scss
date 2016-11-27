@@ -1,0 +1,12 @@
+.reset-game {
+  width: 100%;
+  margin-top: calc(1em + 3vh);
+  background-color: $orange;
+  color: $white;
+}
+
+.add-game-player {
+  clear: both;
+  float: right;
+  margin-top: 2em;
+}
