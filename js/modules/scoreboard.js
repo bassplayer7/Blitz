@@ -42,23 +42,58 @@ define(['knockout', 'modules/player'], function(ko, Player) {
         var self = this,
             leadPlayer;
 
-        this.setLeadPlayer = function() {
+        /**
+         * Returns top score unless all are 0
+         * Returns false if all scores are 0
+         */
+        this.findTopScore = function() {
             var i,
                 players = self.players(),
-                highestPlayer = players[0];
+                topScore = players[0].currentScore(),
+                zeroScore = true;
 
             for (i in players) {
-                players[i].leadScore(false);
-                if (players[i].currentScore() > highestPlayer.currentScore()) {
-                    highestPlayer = players[i];
+                if (players[i].currentScore() !== 0) {
+                    zeroScore = false;
+                }
+
+                if (players[i].currentScore() > topScore) {
+                    topScore = players[i].currentScore();
                 }
             }
 
-            highestPlayer.leadScore(true);
+            return zeroScore ? false : topScore;
+        };
+
+        this.setPlayerRanking = function() {
+            var i,
+                players = self.players(),
+                highestPlayers = [],
+                leadScore = this.findTopScore();
+
+            for (i in players) {
+                players[i].leadScore(false);
+                players[i].tiedScore(false);
+                if (players[i].currentScore() >= leadScore) {
+                    highestPlayers.push(players[i]);
+                }
+            }
+
+            if (!leadScore) {
+                return false;
+            }
+
+            if (highestPlayers.length > 1) {
+                for (i in highestPlayers) {
+                    highestPlayers[i].tiedScore(true);
+                }
+            } else {
+                highestPlayers[0].leadScore(true);
+            }
         };
 
         this.playerCallback = function() {
-            self.setLeadPlayer();
+            self.setPlayerRanking();
             saveGameData(self.players());
         };
 
@@ -102,7 +137,7 @@ define(['knockout', 'modules/player'], function(ko, Player) {
         };
 
         self.players.subscribe(saveGameData);
-        this.setLeadPlayer();
+        this.setPlayerRanking();
 
         window.onbeforeunload = function() {
             saveGameData(self.players());

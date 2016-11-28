@@ -5,7 +5,12 @@
     <title>Dutch Blitz Scores</title>
     <meta name="viewport" content="initial-scale=1.0,width=device-width,minimum-scale=1" />
     <link rel="stylesheet" href="assets/css/prod/styles.css" />
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Righteous" rel="stylesheet">
+    <link rel="icon" type="image/png" href="assets/images/site-icon.png" />
+    <link rel="apple-touch-icon" href="assets/images/touch-icon.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/images/touch-icon-large.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/touch-icon-very-large.png">
+    <script src="https://use.typekit.net/zro0rut.js"></script>
+    <script>try{Typekit.load({ async: true });}catch(e){}</script>
 </head>
 <body>
 <header>
@@ -14,10 +19,14 @@
 
 <section class="content">
     <ul class="game" data-bind="foreach: players">
-        <li class="game__player player" data-bind="css: { 'player--highest': leadScore }, attr: { style: colorVariable() }">
+        <li class="game__player player" data-bind="css: { 'player--highest': leadScore, 'player--tied': tiedScore }, attr: { style: colorVariable() }">
             <div class="player__color"></div>
             <div class="player__name">
-                <label data-bind="attr: { for: elementId }, text: name, visible: !editingName(), click: editName" class="player__name-text"></label>
+                <label data-bind="attr: { for: elementId }, visible: !editingName(), click: editName" class="player__name-group">
+                    <span data-bind="text: name" class="player__name-text"></span>
+                    <span class="player__status-note player__status-note--leading">(leading)</span>
+                    <span class="player__status-note player__status-note--tied">(tied)</span>
+                </label>
                 <button type="button" data-bind="click: $root.removePlayer, visible: !editingName()" class="player__delete">
                     <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 21 21" class="player__delete-icon">
                         <title>close</title>

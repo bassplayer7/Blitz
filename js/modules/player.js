@@ -105,6 +105,7 @@ define(['knockout'], function(ko) {
         });
 
         self.leadScore = ko.observable(false);
+        self.tiedScore = ko.observable(false);
 
         self.scoreInputIsEmpty = ko.pureComputed(function() {
             return !(self.scoreInput() && self.scoreInput().length > 0);
