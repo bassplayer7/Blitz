@@ -9,9 +9,29 @@
 
   &--highest {
     border-left-width: 10px;
+    padding-left: calc(1em + 1vw - 6px);
 
     .player__name-text {
       font-weight: $font-bold;
+      max-width: calc(100% - 3.3em);
+    }
+
+    .player__status-note--leading {
+      display: inline-block;
+    }
+  }
+
+  &--tied {
+    border-left-width: 10px;
+    padding-left: calc(1em + 1vw - 6px);
+
+    .player__name-text {
+      font-weight: $font-bold;
+      max-width: calc(100% - 2.3em);
+    }
+
+    .player__status-note--tied {
+      display: inline-block;
     }
   }
 
@@ -23,12 +43,21 @@
     padding-bottom: 0.5em;
   }
 
-  &__name-text {
+  &__name-group {
     padding: 0.1em 0.5em;
     border: 1px solid transparent;
     display: inline-block;
     vertical-align: middle;
-    font-size: 1.1em;
+    font-size: 1.2em;
+    width: calc(100% - 2em);
+  }
+
+  &__name-text {
+    display: inline-block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
   }
 
   &__name-input {
@@ -39,10 +68,10 @@
   &__delete {
     width: 1.4rem;
     height: 1.4em;
-    padding: 0.1em;
+    padding: 0;
     border-radius: 100%;
     border: none;
-    background-color: $light-gray;
+    background-color: lighten($light-gray, 4);
     display: inline-block;
     vertical-align: middle;
   }
@@ -50,6 +79,7 @@
   &__delete-icon {
     stroke: $white;
     stroke-width: 3px;
+    margin-top: -1px;
   }
 
   &__score-block {
@@ -64,27 +94,32 @@
   }
 
   &__score-input {
+    display: block;
     border-radius: 0;
-    border-width: 1px 0;
+    border-width: 0 1px $border-heavy;
+    background-color: $offset-background;
     width: 6rem;
-    box-shadow: none;
     -webkit-appearance: none;
+    font-size: 1.1em;
+    padding: 0.9em 0.5em;
   }
 
   &__score-button {
     & {
-      background-color: $white;
-      border-color: $light-gray;
+      background-color: $offset-background;
+      border: 0 solid $mid-gray;
       transition: opacity 200ms ease-out, width 200ms ease-out, padding 200ms ease-out, border 200ms ease-out;
       overflow: hidden;
     }
 
     &--minus {
       border-radius: 4px 0 0 4px;
+      border-right: 1px;
     }
 
     &--add {
       border-radius: 0 4px 4px 0;
+      border-left: 1px;
     }
   }
 
@@ -96,23 +131,34 @@
     color: $white;
     font-size: 1.2em;
     font-weight: $font-bold;
-    padding: 0.5em 1em;
-    border-bottom: 4px solid $light-gray;
+    padding: 0.6em 1em;
+    border-bottom: $border-heavy solid $light-gray;
     min-width: 4rem;
     text-align: center;
     background-color: $mid-gray;
     background-color: var(--player-color);
+  }
+
+  &__status-note {
+    display: none;
+    font-size: 0.9rem;
+    vertical-align: top;
+    font-weight: $font-default;
+    color: $mid-gray;
+    letter-spacing: 0.4px;
   }
 }
 
 .has-empty-score {
   .player {
     &__score-input {
-      border: 1px solid $mid-gray;
+      border-color: $mid-gray;
+      border-left-color: transparent;
+      border-right-color: transparent;
     }
 
     &__score-button {
-      opacity: 0.4;
+      opacity: 0.2;
     }
   }
 }
