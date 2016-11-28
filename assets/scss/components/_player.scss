@@ -13,7 +13,7 @@
 
     .player__name-text {
       font-weight: $font-bold;
-      max-width: calc(100% - 3.3em);
+      max-width: calc(100% - 4.5em);
     }
 
     .player__status-note--leading {
@@ -27,7 +27,7 @@
 
     .player__name-text {
       font-weight: $font-bold;
-      max-width: calc(100% - 2.3em);
+      max-width: calc(100% - 3.5em);
     }
 
     .player__status-note--tied {
@@ -46,19 +46,18 @@
   &__name-group {
     padding: 0.1em 0.5em;
     border: 1px solid transparent;
-    display: inline-block;
-    vertical-align: middle;
+    display: block;
     font-size: 1.2em;
-    max-width: calc(100% - 2em);
+    width: 100%;
+    white-space: nowrap;
   }
 
   &__name-text {
     display: inline-block;
     vertical-align: middle;
-    white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 100%;
+    max-width: calc(100% - 1.3em);
   }
 
   &__name-input {
@@ -68,13 +67,15 @@
 
   &__delete {
     width: 1.4rem;
-    height: 1.4em;
+    height: 1.4rem;
+    font-size: 1rem;
     padding: 0;
     border-radius: 100%;
     border: none;
     background-color: lighten($light-gray, 4);
     display: inline-block;
     vertical-align: middle;
+    margin-left: 0.4em;
   }
 
   &__delete-icon {

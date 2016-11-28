@@ -26,13 +26,13 @@
                     <span data-bind="text: name" class="player__name-text"></span>
                     <span class="player__status-note player__status-note--leading">(leading)</span>
                     <span class="player__status-note player__status-note--tied">(tied)</span>
+                    <button type="button" data-bind="click: $root.removePlayer, visible: !editingName()" class="player__delete">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 21 21" class="player__delete-icon">
+                            <title>close</title>
+                            <path d="M2.37,18.63,18.63,2.37M19,19,2,2" style="stroke-linecap: square; stroke-width: 5px;"/>
+                        </svg>
+                    </button>
                 </label>
-                <button type="button" data-bind="click: $root.removePlayer, visible: !editingName()" class="player__delete">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 21 21" class="player__delete-icon">
-                        <title>close</title>
-                        <path d="M2.37,18.63,18.63,2.37M19,19,2,2" style="stroke-linecap: square; stroke-width: 5px;"/>
-                    </svg>
-                </button>
                 <input type="text" data-bind="textInput: name, attr: { id: elementId }, visible: editingName, hasFocus: editingName" placeholder="Name" class="player__name-input"/>
             </div>
             <div class="player__score-block" data-bind="css: { 'has-empty-score': scoreInputIsEmpty() }">
