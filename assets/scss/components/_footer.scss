@@ -3,4 +3,11 @@ footer {
   margin-top: 2em;
   border-top: 1px solid $light-gray;
   text-align: center;
+  font-size: 0.9em;
+  color: $dark-gray;
+  background-color: $offset-background;
+
+  :last-child {
+    margin-bottom: 0;
+  }
 }

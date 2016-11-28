@@ -1,5 +1,12 @@
+html, body {
+  height: 100%;
+}
+
 body {
   font: 16px/1.5 $font-family-sans;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 h1, h2 {

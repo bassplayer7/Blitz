@@ -1,8 +1,21 @@
+.game-action {
+  & {
+    display: flex;
+    justify-content: space-between;
+    padding-top: calc(1em + 3vh);
+    width: 100%;
+    clear: both;
+  }
+
+  &__item {
+    background-color: $orange;
+    color: $white;
+    width: 48%;
+  }
+}
+
 .reset-game {
-  width: 100%;
-  margin-top: calc(1em + 3vh);
-  background-color: $orange;
-  color: $white;
+  background-color: $green;
 }
 
 .add-game-player {
