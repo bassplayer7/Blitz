@@ -49,11 +49,12 @@
     display: inline-block;
     vertical-align: middle;
     font-size: 1.2em;
-    width: calc(100% - 2em);
+    max-width: calc(100% - 2em);
   }
 
   &__name-text {
     display: inline-block;
+    vertical-align: middle;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
