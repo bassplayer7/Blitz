@@ -6,6 +6,10 @@
  */
 
 define(['knockout', 'modules/player'], function(ko, Player) {
+    function clearGameData() {
+        localStorage.setItem('blitz', '');
+    };
+
     function saveGameData(players) {
         var playerJSON = ko.toJSON(players);
         localStorage.setItem('blitz', playerJSON);
@@ -24,6 +28,14 @@ define(['knockout', 'modules/player'], function(ko, Player) {
         }
 
         return players || [new Player(null, changeCallback)];
+    }
+
+    function clearScores(players) {
+        var i;
+
+        for (i in players) {
+            players[i].currentScore(0);
+        }
     }
 
     return function() {
@@ -47,6 +59,7 @@ define(['knockout', 'modules/player'], function(ko, Player) {
 
         this.playerCallback = function() {
             self.setLeadPlayer();
+            saveGameData(self.players());
         };
 
         self.players = ko.observableArray(loadGameData(this.playerCallback));
@@ -55,18 +68,7 @@ define(['knockout', 'modules/player'], function(ko, Player) {
             self.players.push(new Player(null, this.playerCallback));
         };
 
-        this.newGame = function() {
-            if (self.players().length < 1) {
-                // TODO: fix duplicate
-                localStorage.setItem('blitz', '');
-                self.players(loadGameData(this.playerCallback));
-            } else if (confirm("Are you sure you want to clear this game and start over?")) {
-                localStorage.setItem('blitz', '');
-                self.players(loadGameData(this.playerCallback));
-            }
-        };
-
-        this.removePlayer = player => {
+        this.removePlayer = function(player) {
             if (player.currentScore() < 1) {
                 self.players.remove(player);
             } else if (confirm("Are you sure you want to delete this player?")) {
@@ -74,17 +76,36 @@ define(['knockout', 'modules/player'], function(ko, Player) {
             }
         };
 
-        this.scoring = ko.observable();
+        this.clearGame = function() {
+            clearGameData();
+            this.players(loadGameData(this.playerCallback));
+        };
 
+        this.newGame = function() {
+            if (self.players().length < 1) {
+                self.clearGame(self.players(), this.playerCallback);
+            } else if (confirm("Are you sure you want to clear this game and start over?")) {
+                self.clearGame(self.players(), this.playerCallback);
+            }
+        };
+
+        this.resetGame = function() {
+            if (confirm("Are you sure you want to clear all scores?")) {
+                clearGameData();
+                clearScores(self.players());
+            }
+        };
+
+        this.scoring = ko.observable();
         this.scoring.highestPlayer = function(player) {
             return player === leadPlayer;
         };
 
         self.players.subscribe(saveGameData);
+        this.setLeadPlayer();
+
         window.onbeforeunload = function() {
             saveGameData(self.players());
         };
-
-        this.setLeadPlayer();
     };
 });

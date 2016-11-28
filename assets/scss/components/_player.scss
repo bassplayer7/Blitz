@@ -67,12 +67,16 @@
     border-radius: 0;
     border-width: 1px 0;
     width: 6rem;
+    //min-width: 6rem;
+    box-shadow: none;
   }
 
   &__score-button {
     & {
       background-color: $white;
       border-color: $light-gray;
+      transition: opacity 200ms ease-out, width 200ms ease-out, padding 200ms ease-out, border 200ms ease-out;
+      overflow: hidden;
     }
 
     &--minus {
@@ -84,6 +88,10 @@
     }
   }
 
+  &__score-icon {
+    fill: $dark-gray;
+  }
+
   &__score {
     color: $white;
     font-size: 1.2em;
@@ -92,6 +100,19 @@
     border-bottom: 4px solid $light-gray;
     min-width: 4rem;
     text-align: center;
+    background-color: $mid-gray;
     background-color: var(--player-color);
+  }
+}
+
+.has-empty-score {
+  .player {
+    &__score-input {
+      border: 1px solid $mid-gray;
+    }
+
+    &__score-button {
+      opacity: 0.4;
+    }
   }
 }

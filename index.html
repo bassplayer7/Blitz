@@ -26,15 +26,15 @@
                 </button>
                 <input type="text" data-bind="textInput: name, attr: { id: elementId }, visible: editingName, hasFocus: editingName" placeholder="Name" class="player__name-input"/>
             </div>
-            <div class="player__score-block">
+            <div class="player__score-block" data-bind="css: { 'has-empty-score': scoreInputIsEmpty() }">
                 <div class="player__score-entry">
                     <button type="button" data-bind="click: minusScore" class="player__score-button player__score-button--minus" title="Subtract points from score">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 9 9">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 9 9" class="player__score-icon">
                             <title>Subtract Score</title>
                             <rect y="3.5" width="9" height="2"/>
                         </svg>
                     </button>
-                    <input type="tel" title="Player Score" data-bind="value: roundScore, hasFocus: scoreFocus" placeholder="Points" class="player__score-input"/>
+                    <input type="tel" title="Player Score" data-bind="value: roundScore, hasFocus: scoreFocus, textInput: scoreInput" placeholder="Points" class="player__score-input"/>
                     <button type="button" data-bind="click: updateScore" class="player__score-button player__score-button--add" title="Add Points to Score">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 9 9" class="player__score-icon">
                             <title>Add Score</title>
@@ -50,13 +50,16 @@
 
     <button type="button" data-bind="click: addPlayer" class="add-game-player">Add Player</button>
 
-    <button type="button" data-bind="click: newGame" class="reset-game">Start New Game</button>
+    <div class="game-action">
+        <button type="button" data-bind="click: newGame" class="game-action__item new-game">New Game</button>
+        <button type="button" data-bind="click: resetGame" class="game-action__item reset-game">Reset Score</button>
+    </div>
 </section>
 
 <footer>
     <p>Developed by Jesse Maxwell (<a href="https://swiftotter.com">SwiftOtter Studios</a>)</p>
 
-    <p>Please let me know if you find a bug.</p>
+    <p><a href="https://github.com/bassplayer7/Blitz/issues">Ping me</a> to suggest an enhancement or report a bug.</p>
 </footer>
 
 <script data-main="js/init" src="js/lib/require.js" async></script>
