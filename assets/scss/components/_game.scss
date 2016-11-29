@@ -23,4 +23,9 @@
   clear: both;
   float: right;
   margin-top: 2em;
+
+  &__icon {
+    margin-right: 0.5em;
+    fill: $dark-gray;
+  }
 }

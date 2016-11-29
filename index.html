@@ -18,6 +18,16 @@
 </header>
 
 <section class="content">
+    <div data-bind="with: score">
+        <div class="game-status" data-bind="visible: !gameInSetupMode()">
+            <span class="game-status__text"></span>
+            <!-- Points remaining in round -->
+            <!-- Lead Player -->
+            <!-- Time -->
+            <!-- Avg score per round? -->
+        </div>
+    </div>
+
     <ul class="game" data-bind="foreach: players">
         <li class="game__player player" data-bind="css: { 'player--highest': leadScore, 'player--tied': tiedScore }, attr: { style: colorVariable() }">
             <div class="player__color"></div>
@@ -33,7 +43,7 @@
                         </svg>
                     </button>
                 </label>
-                <input type="text" data-bind="textInput: name, attr: { id: elementId }, visible: editingName, hasFocus: editingName" placeholder="Name" class="player__name-input"/>
+                <input type="text" data-bind="textInput: name, attr: { id: elementId }, visible: editingName, hasFocus: editingName" placeholder="Add Player's Name" class="player__name-input"/>
             </div>
             <div class="player__score-block" data-bind="css: { 'has-empty-score': scoreInputIsEmpty() }">
                 <div class="player__score-entry">
@@ -57,11 +67,23 @@
         </li>
     </ul>
 
-    <button type="button" data-bind="click: addPlayer" class="add-game-player">Add Player</button>
+    <button type="button" data-bind="click: addPlayer, visible: !gameFirstView()" class="add-game-player">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 9 9" class="add-game-player__icon">
+        <title>Add Score</title>
+        <rect x="3.5" width="2" height="9"/>
+        <rect y="3.5" width="9" height="2"/>
+    </svg>New Player</button>
+
+    <div class="win-points__wrapper">
+        <div class="win-points" data-bind="with: score">
+            <label for="win-points" class="win-points__label">Points required to win:</label>
+            <input type="tel" id="win-points" data-bind="value: gameEndScore" class="win-points__input" />
+        </div>
+    </div>
 
     <div class="game-action">
-        <button type="button" data-bind="click: newGame" class="game-action__item new-game">New Game</button>
-        <button type="button" data-bind="click: resetGame" class="game-action__item reset-game">Reset Score</button>
+        <button type="button" data-bind="click: newGame, visible: !gameInSetupMode()" class="game-action__item new-game">New Game</button>
+        <button type="button" data-bind="click: resetGame, visible: !gameInSetupMode()" class="game-action__item reset-game">New Round</button>
     </div>
 </section>
 
@@ -71,9 +93,6 @@
     <p><a href="https://github.com/bassplayer7/Blitz/issues">Ping me</a> to suggest an enhancement or report a bug.</p>
 </footer>
 
-<script data-main="js/init" src="js/lib/require.js" async></script>
-<script src="js/lib/instantclick.min.js" data-no-instant></script>
-<script data-no-instant>InstantClick.init();</script>
 <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
             (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -84,5 +103,9 @@
     ga('send', 'pageview');
 
 </script>
+
+<script data-main="js/init" src="js/lib/require.js" async></script>
+<script src="js/lib/instantclick.min.js" data-no-instant></script>
+<script data-no-instant>InstantClick.init();</script>
 </body>
 </html>

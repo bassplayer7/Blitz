@@ -104,6 +104,12 @@ define(['knockout'], function(ko) {
             }
         });
 
+        self.editingName.subscribe(function() {
+            if (!self.editingName() && (!self.name() || self.name().length < 1)) {
+                self.name('Blitzer #' + self.id);
+            }
+        });
+
         self.leadScore = ko.observable(false);
         self.tiedScore = ko.observable(false);
 

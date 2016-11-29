@@ -169,6 +169,10 @@ footer {
   clear: both;
   float: right;
   margin-top: 2em; }
+  /* line 27, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_game.scss */
+  .add-game-player__icon {
+    margin-right: 0.5em;
+    fill: #505050; }
 
 /* line 2, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
 .player {
@@ -324,3 +328,33 @@ footer {
 /* line 162, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
 .has-empty-score .player__score-button {
   opacity: 0.2; }
+
+/* line 2, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_points.scss */
+.win-points {
+  padding: 1em 0;
+  border: solid #eee;
+  border-width: 1px 0;
+  text-align: center; }
+
+/* line 9, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_points.scss */
+.win-points__wrapper {
+  clear: both;
+  padding: calc(1vh + 1em) 0 1em; }
+
+/* line 14, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_points.scss */
+.win-points__label {
+  color: #505050;
+  display: inline-block;
+  vertical-align: middle;
+  padding-right: 0.5em; }
+
+/* line 21, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_points.scss */
+.win-points__input {
+  width: 4rem;
+  border-radius: 0;
+  border-width: 0 0 4px;
+  background-color: #eee;
+  -webkit-appearance: none;
+  font-size: 1.1em;
+  padding: 0.9em 0.5em;
+  text-align: center; }

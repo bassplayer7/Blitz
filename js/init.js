@@ -11,6 +11,6 @@ require.config({
     }
 });
 
-requirejs(['knockout', 'modules/scoreboard'], function(ko, scoreboard) {
-    ko.applyBindings(new scoreboard);
+requirejs(['knockout', 'modules/game'], function(ko, Game) {
+    ko.applyBindings(new Game);
 });
