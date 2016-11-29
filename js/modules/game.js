@@ -5,7 +5,7 @@
  * @copyright Swift Otter Studios, 11/26/16
  */
 
-define(['knockout', 'modules/player', 'modules/score', 'modules/persist'], function(ko, Player, Score, Persist) {
+define(['knockout', 'pubsub', 'modules/player', 'modules/score', 'modules/persist'], function(ko, PubSub, Player, Score, Persist) {
     return function() {
         var self = this;
 
@@ -13,8 +13,11 @@ define(['knockout', 'modules/player', 'modules/score', 'modules/persist'], funct
         this.persist = new Persist(self);
 
         this.playerCallback = function() {
-            self.score.setPlayerRanking();
             self.persist.saveGameData();
+        };
+
+        this.wasChanged = function() {
+            self.playerCallback();
         };
 
         self.players = ko.observableArray(self.persist.loadGameData(this.playerCallback));
@@ -54,7 +57,7 @@ define(['knockout', 'modules/player', 'modules/score', 'modules/persist'], funct
         };
 
         this.gameInSetupMode = function() {
-            return (self.players()[0] && !self.players()[0].name() || !self.score.findTopScore());
+            return (self.players()[0] && !self.players()[0].name() || !self.score.topScore());
         };
 
         this.gameFirstView = function() {
@@ -62,6 +65,7 @@ define(['knockout', 'modules/player', 'modules/score', 'modules/persist'], funct
         };
 
         self.players.subscribe(self.persist.saveGameData);
-        self.score.setPlayerRanking();
+
+        PubSub.publish('game.load');
     };
 });

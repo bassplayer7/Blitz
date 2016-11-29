@@ -77,6 +77,14 @@ p {
   margin-bottom: 1.25em; }
 
 /* line 22, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+b {
+  font-weight: 700; }
+
+/* line 26, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+a {
+  color: #025176; }
+
+/* line 31, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
 button {
   padding: 1em;
   border-radius: 4px;
@@ -85,11 +93,11 @@ button {
   font-weight: 700;
   font-size: 1em;
   outline: none; }
-  /* line 31, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+  /* line 40, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
   button:active {
     transform: translate3d(1px, 1px, 0); }
 
-/* line 36, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+/* line 45, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
 input {
   font-size: 1em;
   padding: 1em 0.5em;
@@ -98,15 +106,15 @@ input {
   border-radius: 4px;
   outline: 1px #025176; }
 
-/* line 45, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+/* line 54, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
 li {
   list-style: none; }
 
-/* line 49, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+/* line 58, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
 .is-hidden {
   display: none; }
 
-/* line 53, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+/* line 62, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
 .content {
   padding: 0 calc(1em + 1vw);
   width: 35rem;
@@ -144,6 +152,10 @@ footer {
   /* line 10, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_footer.scss */
   footer :last-child {
     margin-bottom: 0; }
+
+/* line 15, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_footer.scss */
+.credits {
+  font-size: 0.8em; }
 
 /* line 2, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_game.scss */
 .game-action {
@@ -358,3 +370,106 @@ footer {
   font-size: 1.1em;
   padding: 0.9em 0.5em;
   text-align: center; }
+
+@keyframes flash {
+  0% {
+    transform: scale(0.1);
+    opacity: 1; }
+  80% {
+    transform: scale(2);
+    opacity: 1; }
+  93% {
+    opacity: 1; }
+  100% {
+    transform: scale(1.4);
+    opacity: 0; } }
+
+/* line 23, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+.win-splash {
+  position: fixed;
+  height: 96vh;
+  width: 96vw;
+  top: 2vh;
+  left: 2vw;
+  background-color: #D04410;
+  color: #fff;
+  padding: 4vw;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  box-shadow: 0 0 40px #505050;
+  font-size: 2em;
+  overflow: hidden; }
+
+/* line 43, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+.win-splash__flash {
+  width: 80vw;
+  height: 50vh;
+  position: relative; }
+  /* line 48, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+  .win-splash__flash > * {
+    width: 30vw;
+    height: 30vw;
+    background-color: #fff;
+    border-radius: 100%;
+    animation-duration: 300ms;
+    animation-name: flash;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0; }
+
+/* line 64, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+.win-splash__winner-info {
+  padding-top: 2vh; }
+
+/* line 68, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+.win-splash__winner {
+  font-family: "cabazon", cursive, sans-serif;
+  font-size: 1.5em;
+  line-height: 1;
+  padding-top: 1rem; }
+
+/* line 75, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+.win-splash__icon {
+  fill: #fff;
+  max-width: 40vw; }
+
+/* line 81, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+.circle-2 {
+  animation-duration: 400ms;
+  left: 70%;
+  background-color: #CFA903; }
+
+/* line 87, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+.circle-3 {
+  animation-duration: 450ms;
+  left: 40%;
+  top: 40%;
+  background-color: #04d685; }
+
+/* line 94, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+.circle-4 {
+  animation-duration: 350ms;
+  left: 6%;
+  top: 41%;
+  background-color: #0496da; }
+
+/* line 101, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+.circle-5 {
+  animation-duration: 380ms;
+  left: 45%;
+  top: 12%;
+  background-color: #fff; }
+
+/* line 108, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+.circle-6 {
+  animation-duration: 350ms;
+  left: 44%;
+  top: 44%;
+  background-color: #CFA903; }

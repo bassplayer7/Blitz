@@ -5,11 +5,7 @@
  * @copyright Swift Otter Studios, 11/26/16
  */
 
-/**
- * TODO: fix bug that causes name input to disappear if focus is lost when there is no value
- */
-
-define(['knockout'], function(ko) {
+define(['knockout', 'pubsub'], function(ko, PubSub) {
     var nextId = 0;
 
     function getPlayerId(id) {
@@ -99,6 +95,7 @@ define(['knockout'], function(ko) {
         self.scoreInput = ko.observable();
 
         self.currentScore.subscribe(function() {
+            PubSub.publish('score.update', currentRoundScore);
             if (changeCallback) {
                 changeCallback(self);
             }

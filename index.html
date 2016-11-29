@@ -19,11 +19,9 @@
 
 <section class="content">
     <div data-bind="with: score">
-        <div class="game-status" data-bind="visible: !gameInSetupMode()">
-            <span class="game-status__text"></span>
-            <!-- Points remaining in round -->
-            <!-- Lead Player -->
-            <!-- Time -->
+        <div class="game-status" data-bind="visible: !$root.gameInSetupMode()">
+            <span class="game-status__text">Points remaining: <b data-bind="text: remainingPoints"></b></span>
+            <span class="game-status__text" data-bind="css: { 'is-hidden--fade': !leadPlayerName() }">Lead Player: <b data-bind="text: leadPlayerName()"></b></span>
             <!-- Avg score per round? -->
         </div>
     </div>
@@ -82,8 +80,21 @@
     </div>
 
     <div class="game-action">
-        <button type="button" data-bind="click: newGame, visible: !gameInSetupMode()" class="game-action__item new-game">New Game</button>
-        <button type="button" data-bind="click: resetGame, visible: !gameInSetupMode()" class="game-action__item reset-game">New Round</button>
+        <button type="button" data-bind="click: newGame, visible: !gameInSetupMode()" class="game-action__item new-game">Reset Game</button>
+        <button type="button" data-bind="click: resetGame, visible: !gameInSetupMode()" class="game-action__item reset-game">Clear Scores</button>
+    </div>
+
+    <div data-bind="with: score">
+        <div class="win-splash" data-bind="visible: gameOver">
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 90 112.5" enable-background="new 0 0 90 90" xml:space="preserve" class="win-splash__icon"><rect x="27.886" y="78.089" width="30.995" height="2.933"/><rect x="23.682" y="82.329" width="39.403" height="7.671"/><path d="M52.207,63.597l-0.109-0.015c-2.506-0.354-4.431-2.505-4.431-5.108V44.459h-2.899H42h-2.899v14.014  c0,2.604-1.926,4.755-4.431,5.108l-0.109,0.015c-2.032,0.445-3.554,2.257-3.554,4.424v8.361h8.964h2.986h12.804v-8.361  C55.761,65.854,54.239,64.042,52.207,63.597z"/><path d="M58.688,37.33l-1.993-4.676c12.86-5.482,14.602-16.589,14.726-21.373H57.691V6.199h18.45l0.262,2.246  C76.428,8.648,78.554,28.862,58.688,37.33z"/><path d="M28.08,37.33C8.214,28.862,10.34,8.648,10.363,8.445l0.263-2.246h18.45v5.083h-13.73  c0.124,4.778,1.861,15.889,14.726,21.373L28.08,37.33z"/><path d="M25.741,0.667v5.126v31.902c0,4.875,3.952,8.826,8.826,8.826h17.635c4.873,0,8.826-3.952,8.826-8.826V5.793V0.667H25.741z   M48.505,29.747l-5.121-2.692l-5.121,2.692l0.978-5.703l-4.143-4.038l5.726-0.832l2.56-5.188l2.56,5.188l5.726,0.832l-4.144,4.038 L48.505,29.747z"/></svg>
+            <!--<div class="win-splash__flash" data-bind="foreach: fireworks">-->
+                <!--<div data-bind="attr: { class: className, style: itemStyle } "></div>-->
+            <!--</div>-->
+            <div class="win-splash__winner-info">
+                <div class="win-splash__winner-prefix">Congratulations!</div>
+                <div class="win-splash__winner" data-bind="text: leadPlayerName"></div>
+            </div>
+        </div>
     </div>
 </section>
 
@@ -91,6 +102,7 @@
     <p>Developed by Jesse Maxwell (<a href="https://swiftotter.com">SwiftOtter Studios</a>)</p>
 
     <p><a href="https://github.com/bassplayer7/Blitz/issues">Ping me</a> to suggest an enhancement or report a bug.</p>
+    <p><a href="credits.html" class="credits">Credits</a></p>
 </footer>
 
 <script>
