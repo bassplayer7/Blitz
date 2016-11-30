@@ -26,7 +26,8 @@ define(['knockout', 'pubsub', 'modules/player'], function(ko, PubSub, Player) {
 
         this.loadGameData = function(changeCallback) {
             var data = localStorage.getItem(storageKey),
-                loadedGame, players;
+                loadedGame,
+                players = [];
 
             if (!data) {
                 return [new Player(null, changeCallback)];
