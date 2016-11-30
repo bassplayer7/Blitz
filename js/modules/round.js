@@ -17,6 +17,12 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
             newRoundAllowed = true,
             roundTimer;
 
+        function markRoundAsComplete() {
+            self.rounds.push(partialRound);
+            partialRound = {};
+            newRoundAllowed = false;
+        }
+
         this.allUsersHaveRoundScores = function() {
             var players = game.players(),
                 i;
@@ -45,6 +51,10 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
         };
 
         this.newScore = function(player) {
+            if (self.allUsersHaveRoundScores()) {
+                markRoundAsComplete();
+            }
+
             if (partialRound[player.name()] && this.roundIsFinished()) {
                 // Save Previous Round
                 this.rounds.push(partialRound);
