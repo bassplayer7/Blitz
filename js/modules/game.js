@@ -5,12 +5,13 @@
  * @copyright Swift Otter Studios, 11/26/16
  */
 
-define(['knockout', 'pubsub', 'modules/player', 'modules/score', 'modules/persist'], function(ko, PubSub, Player, Score, Persist) {
+define(['knockout', 'pubsub', 'modules/player', 'modules/score', 'modules/persist', 'modules/round'], function(ko, PubSub, Player, Score, Persist, Round) {
     return function() {
         var self = this;
 
         this.score = new Score(self);
         this.persist = new Persist(self);
+        this.round = new Round(self);
 
         this.playerCallback = function() {
             self.persist.saveGameData();
@@ -35,6 +36,7 @@ define(['knockout', 'pubsub', 'modules/player', 'modules/score', 'modules/persis
         };
 
         this.clearGame = function() {
+            PubSub.publish('game.clear.before', {});
             self.persist.clearGameData();
             ga('send', 'event', 'Game', 'New');
             self.players(self.persist.loadGameData(this.playerCallback));
@@ -48,8 +50,9 @@ define(['knockout', 'pubsub', 'modules/player', 'modules/score', 'modules/persis
             }
         };
 
-        this.resetGame = function() {
-            if (confirm("Are you sure you want to clear all scores?")) {
+        this.resetGame = function(noConfirm) {
+            if (noConfirm || confirm("Are you sure you want to clear all scores?")) {
+                PubSub.publish('game.reset.before', {});
                 self.persist.clearGameData();
                 ga('send', 'event', 'Game', 'Reset Scores');
                 self.score.clearScores(self.players());

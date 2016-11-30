@@ -8,28 +8,25 @@
 define(['knockout', 'pubsub'], function(ko, PubSub) {
     var winPoints = 75;
 
-    function getRandomArbitrary(min, max) {
-        return Math.random() * (max - min) + min;
-    }
-
     return function(game) {
         var self = this;
 
         this.leadPlayers = ko.observableArray([]);
         this.gameEndScore = ko.observable(winPoints);
+        this.closeModal = ko.observable(false);
 
         function calculatePlayerRanking() {
             var i,
                 players = game.players(),
-                leadScore = this.topScore();
+                leadScore = self.topScore();
 
-            this.leadPlayers.removeAll();
+            self.leadPlayers.removeAll();
 
             for (i in players) {
                 players[i].leadScore(false);
                 players[i].tiedScore(false);
                 if (players[i].currentScore() >= leadScore) {
-                    this.leadPlayers.push(players[i]);
+                    self.leadPlayers.push(players[i]);
                 }
             }
 
@@ -37,14 +34,14 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
                 return false;
             }
 
-            if (this.leadPlayers().length > 1) {
-                for (i in this.leadPlayers()) {
-                    this.leadPlayers()[i].tiedScore(true);
+            if (self.leadPlayers().length > 1) {
+                for (i in self.leadPlayers()) {
+                    self.leadPlayers()[i].tiedScore(true);
                 }
             } else {
-                this.leadPlayers()[0].leadScore(true);
+                self.leadPlayers()[0].leadScore(true);
             }
-        };
+        }
 
         /**
          * Returns top score unless all are 0
@@ -87,7 +84,6 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
             if (lead.length > 0) {
                 return lead[0].name();
             }
-            // When they win show a modal for that
         });
 
         this.gameEndScore.subscribe(function() {
@@ -99,34 +95,34 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
             return remaining > 0 ? remaining : 0;
         });
 
-        this.gameOver = ko.pureComputed(function() {
-            return self.remainingPoints() <= 0; // Make sure it's not a tie
-        });
+        this.showWinnerModal = ko.pureComputed(function() {
+            var showModal = false;
 
-        this.fireworks = ko.pureComputed(function() {
-            var numberFireworks = 20,
-                variations = 6,
-                currentVariant = 1,
-                fireworkArray = [],
-                i = 0;
-
-            for (i; i <= numberFireworks; i++) {
-                if (currentVariant > variations) {
-                    currentVariant = 1;
-                }
-
-                fireworkArray.push({
-                    className: 'circle-' + currentVariant,
-                    itemStyle: 'animation-delay: ' + i * getRandomArbitrary(100, 170) + 'ms'
-                });
-
-                currentVariant++;
+            if (self.remainingPoints() <= 0 && game.round.roundIsFinished()) { // TODO: Make sure it's not a tie
+                showModal = true;
             }
 
-            return fireworkArray;
+            return showModal && !self.closeModal();
         });
 
-        PubSub.subscribe('score.update', calculatePlayerRanking.bind(this));
+        this.winnerModalClosing = ko.pureComputed(function() {
+            return self.closeModal() === true;
+        });
+
+        this.closeModalAction = function () {
+            self.closeModal(true);
+        };
+
+        this.closeAndReset = function() {
+            self.closeModal(true);
+            game.resetGame(true);
+        };
+
+        PubSub.subscribe('score.update', function() {
+            calculatePlayerRanking.call(this);
+            self.remainingPoints.notifySubscribers();
+        });
+
         PubSub.subscribe('game.load', calculatePlayerRanking.bind(this));
 
         PubSub.subscribe('perist.load', function(name, loadedGame) {

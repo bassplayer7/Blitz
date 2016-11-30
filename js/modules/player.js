@@ -50,12 +50,12 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
         player = player || {};
 
         var self = this;
-        var currentRoundScore;
 
         self.id = getPlayerId(player.id);
         self.name = ko.observable(player.name);
         self.score = ko.observable(player.currentScore || 0); // primary score keeper
         self.color = ko.observable(player.color || getColorForPlayer());
+        self.currentRoundScore = ko.observable();
 
         self.colorVariable = function() {
             return '--player-color: var(--' + self.color() + ')';
@@ -72,7 +72,7 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
         self.currentScore = ko.pureComputed({
             read: function() {
                 self.score(parseInt(self.roundScore() || 0) + parseInt(self.score()));
-                currentRoundScore = self.roundScore();
+                self.currentRoundScore(self.roundScore());
                 self.roundScore(null);
                 return self.score();
             },
@@ -95,7 +95,7 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
         self.scoreInput = ko.observable();
 
         self.currentScore.subscribe(function() {
-            PubSub.publish('score.update', currentRoundScore);
+            PubSub.publish('score.update', self);
             if (changeCallback) {
                 changeCallback(self);
             }
@@ -120,7 +120,7 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
          */
         self.minusScore = function() {
             // Take the actual score, convert it to negative and double it (because it was previously added to score)
-            var actualRoundScore = (currentRoundScore * -1) * 2;
+            var actualRoundScore = (this.currentRoundScore() * -1) * 2;
             // Update the currentScore by adjusting the roundScore
             self.roundScore(actualRoundScore);
         }

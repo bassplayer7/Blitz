@@ -1,20 +1,46 @@
-@keyframes flash {
+@keyframes display-card {
   0% {
-    transform: scale(0.1);
+    transform: scale(0.8) translateY(-120vh);
+  }
+
+  10% {
     opacity: 1;
+  }
+
+  60% {
+    transform: scale(0.8) translateY(0);
   }
 
   80% {
-    transform: scale(2);
-    opacity: 1;
+    transform: scale(1.15);
   }
 
-  93% {
-    opacity: 1;
+  94% {
+    transform: scale(1.03);
   }
 
   100% {
-    transform: scale(1.4);
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes close-card {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  40% {
+    transform: scale(0.9);
+    opacity: 1;
+  }
+
+  99% {
+    transform: scale(0.1);
+  }
+
+  100% {
     opacity: 0;
   }
 }
@@ -33,81 +59,80 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     border-radius: $border-radius;
     box-shadow: 0 0 40px $dark-gray;
-    font-size: 2em;
     overflow: hidden;
+    transform: scale(0.8) translateY(-120vh);
+    opacity: 0;
   }
 
-  &__flash {
-    width: 80vw;
-    height: 50vh;
-    position: relative;
+  &--visible {
+    animation-name: display-card;
+    animation-fill-mode: forwards;
+    animation-duration: 800ms;
+    animation-timing-function: ease-in;
+  }
 
-    > * {
-      width: 30vw;
-      height: 30vw;
-      background-color: $white;
-      border-radius: 100%;
-      animation-duration: 300ms;
-      animation-name: flash;
-      animation-iteration-count: 1;
-      animation-timing-function: ease-out;
-      position: absolute;
-      top: 0;
-      left: 0;
-      opacity: 0;
-    }
+  &--closing {
+    animation-name: close-card;
+    animation-fill-mode: forwards;
+    animation-duration: 250ms;
+    animation-timing-function: ease-out;
   }
 
   &__winner-info {
     padding-top: 2vh;
   }
 
+  &__winner-prefix {
+    font-size: 1.75em;
+  }
+
   &__winner {
     font-family: $font-family-serif;
-    font-size: 1.5em;
+    font-size: 2.5em;
     line-height: 1;
     padding-top: 1rem;
+  }
+
+  &__explanatory {
+    padding-top: 1.25rem;
+  }
+
+  &__hero {
+    flex-grow: 1;
+    max-height: 30vh;
+    width: 100%;
   }
 
   &__icon {
     fill: $white;
     max-width: 40vw;
+    margin-top: 50%;
+    transform: translateY(-50%);
   }
-}
 
-.circle-2 {
-  animation-duration: 400ms;
-  left: 70%;
-  background-color: $yellow;
-}
+  &__close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: $white;
+    border-radius: 100%;
+    width: 3rem;
+    height: 3rem;
+    padding: 0.1em;
+    border: 0;
+  }
 
-.circle-3 {
-  animation-duration: 450ms;
-  left: 40%;
-  top: 40%;
-  background-color: lighten($green, 20);
-}
+  &__close-icon {
+    stroke: $dark-gray;
+  }
 
-.circle-4 {
-  animation-duration: 350ms;
-  left: 6%;
-  top: 41%;
-  background-color: lighten($blue, 20);
-}
-
-.circle-5 {
-  animation-duration: 380ms;
-  left: 45%;
-  top: 12%;
-  background-color: $white;
-}
-
-.circle-6 {
-  animation-duration: 350ms;
-  left: 44%;
-  top: 44%;
-  background-color: $yellow;
+  &__action {
+    width: 100%;
+    margin-top: 1.25em;
+    padding: 0.75em;
+    border: 0;
+  }
 }

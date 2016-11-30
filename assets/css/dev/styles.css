@@ -371,20 +371,34 @@ footer {
   padding: 0.9em 0.5em;
   text-align: center; }
 
-@keyframes flash {
+@keyframes display-card {
   0% {
-    transform: scale(0.1);
+    transform: scale(0.8) translateY(-120vh); }
+  10% {
     opacity: 1; }
+  60% {
+    transform: scale(0.8) translateY(0); }
   80% {
-    transform: scale(2);
-    opacity: 1; }
-  93% {
-    opacity: 1; }
+    transform: scale(1.15); }
+  94% {
+    transform: scale(1.03); }
   100% {
-    transform: scale(1.4);
+    transform: none;
+    opacity: 1; } }
+
+@keyframes close-card {
+  0% {
+    transform: scale(1);
+    opacity: 1; }
+  40% {
+    transform: scale(0.9);
+    opacity: 1; }
+  99% {
+    transform: scale(0.1); }
+  100% {
     opacity: 0; } }
 
-/* line 23, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+/* line 49, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
 .win-splash {
   position: fixed;
   height: 96vh;
@@ -398,78 +412,78 @@ footer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   border-radius: 4px;
   box-shadow: 0 0 40px #505050;
-  font-size: 2em;
-  overflow: hidden; }
+  overflow: hidden;
+  transform: scale(0.8) translateY(-120vh);
+  opacity: 0; }
 
-/* line 43, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
-.win-splash__flash {
-  width: 80vw;
-  height: 50vh;
-  position: relative; }
-  /* line 48, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
-  .win-splash__flash > * {
-    width: 30vw;
-    height: 30vw;
-    background-color: #fff;
-    border-radius: 100%;
-    animation-duration: 300ms;
-    animation-name: flash;
-    animation-iteration-count: 1;
-    animation-timing-function: ease-out;
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0; }
+/* line 70, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+.win-splash--visible {
+  animation-name: display-card;
+  animation-fill-mode: forwards;
+  animation-duration: 800ms;
+  animation-timing-function: ease-in; }
 
-/* line 64, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+/* line 77, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+.win-splash--closing {
+  animation-name: close-card;
+  animation-fill-mode: forwards;
+  animation-duration: 250ms;
+  animation-timing-function: ease-out; }
+
+/* line 84, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
 .win-splash__winner-info {
   padding-top: 2vh; }
 
-/* line 68, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+/* line 88, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+.win-splash__winner-prefix {
+  font-size: 1.75em; }
+
+/* line 92, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
 .win-splash__winner {
   font-family: "cabazon", cursive, sans-serif;
-  font-size: 1.5em;
+  font-size: 2.5em;
   line-height: 1;
   padding-top: 1rem; }
 
-/* line 75, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+/* line 99, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+.win-splash__explanatory {
+  padding-top: 1.25rem; }
+
+/* line 103, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+.win-splash__hero {
+  flex-grow: 1;
+  max-height: 30vh;
+  width: 100%; }
+
+/* line 109, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
 .win-splash__icon {
   fill: #fff;
-  max-width: 40vw; }
+  max-width: 40vw;
+  margin-top: 50%;
+  transform: translateY(-50%); }
 
-/* line 81, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
-.circle-2 {
-  animation-duration: 400ms;
-  left: 70%;
-  background-color: #CFA903; }
+/* line 116, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+.win-splash__close {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: #fff;
+  border-radius: 100%;
+  width: 3rem;
+  height: 3rem;
+  padding: 0.1em;
+  border: 0; }
 
-/* line 87, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
-.circle-3 {
-  animation-duration: 450ms;
-  left: 40%;
-  top: 40%;
-  background-color: #04d685; }
+/* line 128, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+.win-splash__close-icon {
+  stroke: #505050; }
 
-/* line 94, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
-.circle-4 {
-  animation-duration: 350ms;
-  left: 6%;
-  top: 41%;
-  background-color: #0496da; }
-
-/* line 101, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
-.circle-5 {
-  animation-duration: 380ms;
-  left: 45%;
-  top: 12%;
-  background-color: #fff; }
-
-/* line 108, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
-.circle-6 {
-  animation-duration: 350ms;
-  left: 44%;
-  top: 44%;
-  background-color: #CFA903; }
+/* line 132, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+.win-splash__action {
+  width: 100%;
+  margin-top: 1.25em;
+  padding: 0.75em;
+  border: 0; }
