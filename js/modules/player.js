@@ -113,7 +113,7 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
 
         var canUpdateRound = true;
 
-        self.incrementRound = function() {
+        self.incrementRound = function(quiet) {
             var currentRoundNumber = self.lastRecordedRound();
 
             if (canUpdateRound) {
@@ -132,7 +132,9 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
                 // }
             // }, 30000);
 
-            PubSub.publish('round.update', self);
+            if (!quiet) {
+                PubSub.publish('round.update', self);
+            }
         };
 
         /**

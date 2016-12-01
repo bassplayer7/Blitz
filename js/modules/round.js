@@ -10,106 +10,141 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
 
     return function (game) {
         var self = this;
+        var defaultPartial = function() {
+            return {
+                players: [],
+                lowestRound: 0,
+                topRound: 0,
+                playersOnCurrentRound: true,
+            }
+        };
 
         this.rounds = ko.observableArray([]);
-        this.partialRound = ko.observable({});
-        this.roundCounter = ko.observable({}); // notifier
+        this.partialRound = defaultPartial();
 
         function markRoundAsComplete() {
-            self.rounds.push(self.partialRound());
-            self.partialRound({});
+            self.rounds.push(self.partialRound);
+            console.log("Round #" + self.rounds()[self.partialRound.topRound - 1].topRound + ' was saved');
+            self.partialRound = defaultPartial();
+
             PubSub.publish('round.complete', self.rounds()[self.rounds().length]);
         }
 
+        function roundInfoFrom(player) {
+            return {
+                id: player.id,
+                round: player.lastRecordedRound()
+            }
+        }
+
+        function finishPreviousRoundAndCreateNew() {
+            var players = game.players(),
+                match;
+
+            players.forEach(player => {
+                match = ko.utils.arrayFirst(self.partialRound.players, function(item) {
+                    return player.id === item.id;
+                });
+
+                if (!match) {
+                    player.incrementRound(true);
+                    console.log(roundInfoFrom(player));
+                    self.partialRound.players.push(roundInfoFrom(player));
+                }
+            });
+
+            markRoundAsComplete();
+        }
+
         this.currentRound = ko.pureComputed(function() {
-            self.roundCounter();
-            return self.findLowestRecordedRound() + 1;
+            return self.rounds().length + 1;
         });
 
-        this.findLastRecordedRound = function() {
-            var topRound = 0;
-
-            game.players().forEach(player => {
-                if (player.lastRecordedRound() >= topRound) {
-                    topRound = player.lastRecordedRound();
-                }
-            });
-
-            return topRound;
-        };
-
-        this.findLowestRecordedRound = function() {
-            var topRound = self.findLastRecordedRound(),
-                lowestRound = topRound;
-
-            game.players().forEach(player => {
-                if (player.lastRecordedRound() <= topRound) {
-                    lowestRound = player.lastRecordedRound();
-                }
-            });
-
-            return lowestRound;
-        };
-
-        this.allPlayersOnCurrentRound = function() {
-            var playersOnCurrentRound = true,
-                topRound = self.findLastRecordedRound();
-
-            // TODO: fix performance problem
-            game.players().forEach(player => {
-                if (player.lastRecordedRound() < topRound) {
-                    playersOnCurrentRound = false;
-                }
-            });
-
-            return playersOnCurrentRound;
-        };
-
-        this.isRoundFinished = function() {
-            // var score = game.score.topScore();
-            // self.partialRound.notifySubscribers();
-
-            if (self.allPlayersOnCurrentRound()) {
-                markRoundAsComplete();
-                return true;
+        this.calculateRound = function (player) {
+            if (ko.utils.arrayFirst(self.partialRound.players, item => player.id === item.id) && self.partialRound.topRound !== 0) {
+                finishPreviousRoundAndCreateNew();
             }
 
-            return false;
+            console.log(roundInfoFrom(player));
+            self.partialRound.players.push(roundInfoFrom(player));
+
+            self.partialRound.players.forEach(playerRound => {
+                if (playerRound.round >= self.partialRound.topRound) {
+                    self.partialRound.topRound = playerRound.round;
+                }
+
+                if (playerRound.round <= self.partialRound.topRound) {
+                    self.partialRound.lowestRound = playerRound.round;
+                }
+
+                self.partialRound.playersOnCurrentRound = !(playerRound.round < self.partialRound.topRound);
+            });
+
+            if (self.partialRound.players.length < game.players().length) {
+                self.partialRound.playersOnCurrentRound = false;
+            }
+
+            // console.log(self.partialRound.players);
+
+            if (self.partialRound.playersOnCurrentRound && self.partialRound.topRound !== 0) {
+                markRoundAsComplete();
+            }
         };
 
-        // this.scoreUpdateListener = function(player) {
-        //     console.log(`${player.name()} score updated`);
+        // this.calculateRound = function () {
+        //     var players = game.players(),
+        //         lastRecordedRound;
         //
-        //     // if (self.allUsersHaveScoresFor()) {
-        //     //     markRoundAsComplete();
-        //     // }
+        //     self.partialRound = defaultPartial();
         //
-        //     var partialRound = self.partialRound();
-        //     partialRound[player.name()] = player.currentRoundScore();
+        //     players.forEach(player => {
+        //         lastRecordedRound = player.lastRecordedRound();
+        //         self.partialRound.players[player.name()] = lastRecordedRound;
         //
-        //     self.partialRound(partialRound);
+        //         if (lastRecordedRound >= self.partialRound.topRound) {
+        //             self.partialRound.topRound = lastRecordedRound;
+        //         }
         //
-        //     // if (self.allUsersHaveScoresFor()) {
-        //     //     markRoundAsComplete();
-        //     // }
+        //         if (lastRecordedRound <= self.partialRound.topRound) {
+        //             self.partialRound.lowestRound = lastRecordedRound;
+        //         }
+        //
+        //         self.partialRound.playersOnCurrentRound = !(lastRecordedRound < self.partialRound.topRound);
+        //     });
+        //
+        //     console.log(self.partialRound);
+        //
+        //     if (self.partialRound.playersOnCurrentRound && self.partialRound.topRound !== 0) {
+        //         markRoundAsComplete();
+        //     }
         // };
 
-        this.resetRounds = function() {
-            ga('send', 'event', 'Rounds', 'Played', 'One Game', self.rounds().length + 1);
-            ga('send', 'event', 'Game', 'Played', 'Score to Win', game.score.gameEndScore());
-            ga('send', 'event', 'Players', 'Won', 'Lead Player', game.score.leadPlayerName());
-            ga('send', 'event', 'Players', 'Top Score', 'Winning Score', game.score.topScore());
+        this.isRoundFinished = function() {
+            return self.partialRound.playersOnCurrentRound === true;
+        };
 
+        this.resetRounds = function() {
+            var roundsPlayed = self.rounds().length + 1,
+                endScore = game.score.gameEndScore(),
+                leaderName = game.score.leadPlayerName(),
+                winningScore =  game.score.topScore(),
+                rounds = self.rounds();
 
             game.players().forEach(player => { player.lastRecordedRound(0) });
+            self.rounds.removeAll();
+            self.partialRound = defaultPartial();
+
+            setTimeout(function() {
+                ga('send', 'event', 'Rounds', 'Played', 'One Game', roundsPlayed);
+                ga('send', 'event', 'Game', 'Played', 'Score to Win', endScore);
+                ga('send', 'event', 'Players', 'Won', 'Lead Player', leaderName);
+                ga('send', 'event', 'Players', 'Top Score', 'Winning Score', winningScore);
+                ga('send', 'event', 'Game', 'Played', 'Info', ko.toJSON(rounds));
+            }, 100);
         };
 
         PubSub.subscribe('round.update', function(evt, player) {
-            self.roundCounter.notifySubscribers();
-
-            var partialRound = self.partialRound();
-            partialRound[player.name()] = player.lastRecordedRound();
-            self.partialRound(partialRound);
+            self.calculateRound(player);
         });
 
         PubSub.subscribe('perist.load', function(name, loadedGame) {
@@ -118,7 +153,7 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
             }
         });
 
-        PubSub.subscribe('game.reset.before', this.resetRounds);
-        PubSub.subscribe('game.clear.before', this.resetRounds);
+        PubSub.subscribe('game.reset', this.resetRounds);
+        PubSub.subscribe('game.clear', this.resetRounds);
     }
 });

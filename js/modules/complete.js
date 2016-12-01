@@ -11,10 +11,9 @@ define(['knockout', 'pubsub'], function (ko, PubSub) {
 
         this.calculateWinnerModal = ko.observable(false);
         this.closeModal = ko.observable(false);
+        this.gameLeaders = ko.observableArray([]);
 
-        this.isGameComplete = ko.pureComputed(function() { // TODO: Make sure it's not a tie
-            self.calculateWinnerModal();
-
+        this.isGameComplete = function() { // TODO: Make sure it's not a tie
             var gameOver = false,
                 gameCanComplete = false;
 
@@ -26,14 +25,17 @@ define(['knockout', 'pubsub'], function (ko, PubSub) {
                 gameCanComplete = true;
             }
 
-            if (game.score.leadPlayers().length > 1) {
+            if (self.gameLeaders().length > 1) {
                 gameCanComplete = false;
             }
 
+            console.log('Calculating Game Complete');
+
             return gameOver && gameCanComplete;
-        });
+        };
 
         this.showWinnerModal = ko.pureComputed(function() {
+            self.calculateWinnerModal();
             return self.isGameComplete() && !self.closeModal();
         });
 
@@ -43,15 +45,31 @@ define(['knockout', 'pubsub'], function (ko, PubSub) {
 
         this.closeModalAction = function () {
             self.closeModal(true);
+
+            setTimeout(function() {
+                self.modalCanOpenAgain();
+            }, 1000);
         };
 
+        this.modalCanOpenAgain = ko.pureComputed(function() {
+            if (game.score.topScore() <= game.score.gameEndScore()) {
+                self.closeModal(false);
+            }
+        });
+
         this.closeAndReset = function() {
-            self.closeModal(true);
+            self.closeModalAction();
             game.resetGame(true);
         };
 
-        PubSub.subscribe('round.complete', function() {
-            self.calculateWinnerModal.notifySubscribers();
+        PubSub.subscribe('round.complete', function(evt, roundNumber) {
+            if (roundNumber > 1) {
+                self.calculateWinnerModal.notifySubscribers();
+            }
+        });
+
+        PubSub.subscribe('score.leaders', function(evt, leaders) {
+            self.gameLeaders(leaders);
         });
     }
 });

@@ -41,6 +41,8 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
             } else {
                 self.leadPlayers()[0].leadScore(true);
             }
+
+            PubSub.publish('score.leaders', self.leadPlayers());
         }
 
         /**

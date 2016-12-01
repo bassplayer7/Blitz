@@ -31,7 +31,7 @@ define(['knockout', 'pubsub', 'modules/player', 'modules/score', 'modules/persis
         };
 
         this.clearGame = function() {
-            PubSub.publish('game.clear.before', {});
+            PubSub.publish('game.clear', {});
             self.persist.clearGameData();
             ga('send', 'event', 'Game', 'New');
             self.players(self.persist.loadGameData());
@@ -47,11 +47,9 @@ define(['knockout', 'pubsub', 'modules/player', 'modules/score', 'modules/persis
 
         this.resetGame = function(noConfirm) {
             if (noConfirm === true || confirm("Are you sure you want to clear all scores?")) {
-                PubSub.publish('game.reset.before', {});
-                self.persist.clearGameData();
                 ga('send', 'event', 'Game', 'Reset Scores');
-                self.score.clearScores(self.players());
                 PubSub.publish('game.reset', {});
+                self.persist.clearGameData();
             }
         };
 
