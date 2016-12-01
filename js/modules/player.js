@@ -46,16 +46,22 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
         return color;
     }
 
-    return function(player, changeCallback) {
+    return function(player) {
         player = player || {};
 
         var self = this;
 
-        self.id = getPlayerId(player.id);
-        self.name = ko.observable(player.name);
-        self.score = ko.observable(player.currentScore || 0); // primary score keeper
-        self.color = ko.observable(player.color || getColorForPlayer());
-        self.currentRoundScore = ko.observable();
+        self.id                 = getPlayerId(player.id);
+        self.name               = ko.observable(player.name);
+        self.score              = ko.observable(player.currentScore || 0); // primary score keeper
+        self.color              = ko.observable(player.color || getColorForPlayer());
+        self.currentRoundScore  = ko.observable();
+        self.leadScore          = ko.observable(false);
+        self.tiedScore          = ko.observable(false);
+        self.scoreInput         = ko.observable();
+        self.roundScore         = ko.observable(player.roundScore);
+        self.scoreFocus         = ko.observable(false);
+        self.lastRecordedRound  = ko.observable(player.lastRecordedRound || 0);
 
         self.colorVariable = function() {
             return '--player-color: var(--' + self.color() + ')';
@@ -65,9 +71,6 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
             var current = self.color();
             self.color(getColorForPlayer(current));
         };
-
-        self.roundScore = ko.observable(player.roundScore);
-        self.scoreFocus = ko.observable(false);
 
         self.currentScore = ko.pureComputed({
             read: function() {
@@ -92,13 +95,10 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
 
         self.updateScore = function() {};
 
-        self.scoreInput = ko.observable();
-
         self.currentScore.subscribe(function() {
+            self.incrementRound();
             PubSub.publish('score.update', self);
-            if (changeCallback) {
-                changeCallback(self);
-            }
+            PubSub.publish('game.save', {});
         });
 
         self.editingName.subscribe(function() {
@@ -107,12 +107,33 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
             }
         });
 
-        self.leadScore = ko.observable(false);
-        self.tiedScore = ko.observable(false);
-
         self.scoreInputIsEmpty = ko.pureComputed(function() {
             return !(self.scoreInput() && self.scoreInput().length > 0);
         });
+
+        var canUpdateRound = true;
+
+        self.incrementRound = function() {
+            var currentRoundNumber = self.lastRecordedRound();
+
+            if (canUpdateRound) {
+                self.lastRecordedRound(currentRoundNumber + 1);
+                console.log(`${self.name()} completed round # ${self.lastRecordedRound()}`);
+                canUpdateRound = false;
+            }
+
+            // setTimeout(function() {
+                canUpdateRound = true;
+
+                // TODO: account for 0 scores in some players
+                // if (self.currentRound() === currentRoundNumber) {
+                //     self.currentRound(currentRoundNumber + 1);
+                //     console.log(`${self.name()} on round # ${self.currentRound()}`);
+                // }
+            // }, 30000);
+
+            PubSub.publish('round.update', self);
+        };
 
         /**
          * Because the roundScore is calculated when focus is removed from the input, the score actually changes before

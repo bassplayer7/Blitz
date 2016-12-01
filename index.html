@@ -19,12 +19,12 @@
 
 <section class="content">
     <div data-bind="with: score">
-        <div class="game-status" data-bind="visible: !$root.gameInSetupMode()">
+        <div class="game-status"><!-- data-bind="visible: !$root.gameInSetupMode()" -->
             <span class="game-status__text">Points remaining: <b data-bind="text: remainingPoints"></b></span>
             <span class="game-status__text" data-bind="css: { 'is-hidden--fade': !leadPlayerName() }">Lead Player: <b data-bind="text: leadPlayerName()"></b></span>
             <!-- Avg score per round? -->
             <div data-bind="with: $root.round">
-                <span class="game-status__text">Round #<b data-bind="text: rounds().length + 1"></b></span>
+                <span class="game-status__text">Round #<b data-bind="text: currentRound"></b></span>
             </div>
         </div>
     </div>
@@ -87,7 +87,7 @@
         <button type="button" data-bind="click: resetGame, visible: !gameInSetupMode()" class="game-action__item reset-game">Clear Scores</button>
     </div>
 
-    <div data-bind="with: score">
+    <div data-bind="with: complete">
         <div class="win-splash" data-bind="css: { 'win-splash--visible' : showWinnerModal, 'win-splash--closing': winnerModalClosing }">
             <button type="button" class="win-splash__close" data-bind="click: closeModalAction">
                 <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" class="win-splash__close-icon">
@@ -100,8 +100,8 @@
             </div>
             <div class="win-splash__winner-info">
                 <div class="win-splash__winner-prefix">Congratulations!</div>
-                <div class="win-splash__winner" data-bind="text: leadPlayerName"></div>
-                <div class="win-splash__explanatory">You won with <span data-bind="text: topScore"></span> points!</div>
+                <div class="win-splash__winner" data-bind="text: $root.score.leadPlayerName"></div>
+                <div class="win-splash__explanatory">You won with <span data-bind="text: $root.score.topScore"></span> points!</div>
             </div>
             <button type="button" class="win-splash__action" data-bind="click: closeAndReset">Play Again</button>
         </div>

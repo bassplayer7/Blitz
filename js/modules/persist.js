@@ -24,31 +24,34 @@ define(['knockout', 'pubsub', 'modules/player'], function(ko, PubSub, Player) {
             localStorage.setItem(storageKey, ko.toJSON(dataObj));
         };
 
-        this.loadGameData = function(changeCallback) {
+        this.loadGameData = function() {
             var data = localStorage.getItem(storageKey),
                 loadedGame,
                 players = [];
 
             if (!data) {
-                return [new Player(null, changeCallback)];
+                return [new Player()];
             }
 
             loadedGame = JSON.parse(data);
             PubSub.publish('perist.load', loadedGame);
 
-            if (loadedGame.hasOwnProperty('players')) {
-                players = loadedGame.players;
-
-                for (var item in players) {
-                    players[item] = new Player(players[item], changeCallback);
-                }
-            }
-
-            return players.length > 0 ? players : [new Player(null, changeCallback)];
+            return players.length > 0 ? players : [new Player()];
         };
 
         window.onbeforeunload = function() {
             self.saveGameData();
         };
+
+        PubSub.subscribe('game.save', function() {
+            self.saveGameData();
+        });
+
+        /**
+         * Primary entry point
+         */
+        PubSub.subscribe('game.load', function() {
+            self.loadGameData();
+        });
     };
 });

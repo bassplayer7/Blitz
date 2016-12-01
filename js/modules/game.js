@@ -5,26 +5,21 @@
  * @copyright Swift Otter Studios, 11/26/16
  */
 
-define(['knockout', 'pubsub', 'modules/player', 'modules/score', 'modules/persist', 'modules/round'], function(ko, PubSub, Player, Score, Persist, Round) {
+define(['knockout', 'pubsub', 'modules/player', 'modules/score', 'modules/persist', 'modules/round', 'modules/complete'], function(ko, PubSub, Player, Score, Persist, Round, Complete) {
     return function() {
         var self = this;
 
-        this.score = new Score(self);
+        self.players = ko.observableArray([new Player()]);
+
         this.persist = new Persist(self);
+        this.score = new Score(self);
         this.round = new Round(self);
+        this.complete = new Complete(self);
 
-        this.playerCallback = function() {
-            self.persist.saveGameData();
-        };
-
-        this.wasChanged = function() {
-            self.playerCallback();
-        };
-
-        self.players = ko.observableArray(self.persist.loadGameData(this.playerCallback));
+        this.wasChanged = function() { console.log('Error') };
 
         this.addPlayer = function() {
-            self.players.push(new Player(null, this.playerCallback));
+            self.players.push(new Player());
         };
 
         this.removePlayer = function(player) {
@@ -39,23 +34,24 @@ define(['knockout', 'pubsub', 'modules/player', 'modules/score', 'modules/persis
             PubSub.publish('game.clear.before', {});
             self.persist.clearGameData();
             ga('send', 'event', 'Game', 'New');
-            self.players(self.persist.loadGameData(this.playerCallback));
+            self.players(self.persist.loadGameData());
         };
 
         this.newGame = function() {
             if (self.players().length < 1) {
-                self.clearGame(self.players(), this.playerCallback);
+                self.clearGame(self.players());
             } else if (confirm("Are you sure you want to clear this game and start over?")) {
-                self.clearGame(self.players(), this.playerCallback);
+                self.clearGame(self.players());
             }
         };
 
         this.resetGame = function(noConfirm) {
-            if (noConfirm || confirm("Are you sure you want to clear all scores?")) {
+            if (noConfirm === true || confirm("Are you sure you want to clear all scores?")) {
                 PubSub.publish('game.reset.before', {});
                 self.persist.clearGameData();
                 ga('send', 'event', 'Game', 'Reset Scores');
                 self.score.clearScores(self.players());
+                PubSub.publish('game.reset', {});
             }
         };
 
@@ -69,6 +65,20 @@ define(['knockout', 'pubsub', 'modules/player', 'modules/score', 'modules/persis
 
         self.players.subscribe(self.persist.saveGameData);
 
-        PubSub.publish('game.load');
+        PubSub.subscribe('perist.load', function(name, loadedGame) {
+            if (loadedGame.hasOwnProperty('players')) {
+                var players = loadedGame.players;
+
+                for (var item in players) {
+                    players[item] = new Player(players[item]);
+                }
+
+                self.players(players);
+            }
+
+            PubSub.publish('game.ready', {});
+        });
+
+        PubSub.publish('game.load', self);
     };
 });

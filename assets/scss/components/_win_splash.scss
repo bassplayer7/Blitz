@@ -108,9 +108,12 @@
 
   &__icon {
     fill: $white;
-    max-width: 40vw;
-    margin-top: 50%;
-    transform: translateY(-50%);
+    max-width: 30vh;
+
+    @media (max-width: 30rem) {
+      margin-top: 50%;
+      transform: translateY(-50%);
+    }
   }
 
   &__close {

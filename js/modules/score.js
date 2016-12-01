@@ -87,7 +87,7 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
         });
 
         this.gameEndScore.subscribe(function() {
-            game.wasChanged();
+            PubSub.publish('game.save', {});
         });
 
         this.remainingPoints = ko.pureComputed(function() {
@@ -95,40 +95,22 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
             return remaining > 0 ? remaining : 0;
         });
 
-        this.showWinnerModal = ko.pureComputed(function() {
-            var showModal = false;
-
-            if (self.remainingPoints() <= 0 && game.round.roundIsFinished()) { // TODO: Make sure it's not a tie
-                showModal = true;
-            }
-
-            return showModal && !self.closeModal();
-        });
-
-        this.winnerModalClosing = ko.pureComputed(function() {
-            return self.closeModal() === true;
-        });
-
-        this.closeModalAction = function () {
-            self.closeModal(true);
-        };
-
-        this.closeAndReset = function() {
-            self.closeModal(true);
-            game.resetGame(true);
-        };
-
         PubSub.subscribe('score.update', function() {
             calculatePlayerRanking.call(this);
-            self.remainingPoints.notifySubscribers();
         });
 
-        PubSub.subscribe('game.load', calculatePlayerRanking.bind(this));
+        PubSub.subscribe('game.ready', calculatePlayerRanking.bind(this));
 
         PubSub.subscribe('perist.load', function(name, loadedGame) {
             if (loadedGame.hasOwnProperty('score')) {
                 self.gameEndScore(loadedGame.score);
             }
+
+            calculatePlayerRanking.call(self);
+        });
+
+        PubSub.subscribe('game.reset', function() {
+            self.clearScores();
         });
     }
 });
