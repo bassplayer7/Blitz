@@ -7,10 +7,11 @@
 
 require.config({
     paths: {
-        knockout: './lib/knockout-3.4.1'
+        knockout: './lib/knockout-3.4.1',
+        pubsub: './lib/pubsub.min'
     }
 });
 
-requirejs(['knockout', 'modules/scoreboard'], function(ko, scoreboard) {
-    ko.applyBindings(new scoreboard);
+requirejs(['knockout', 'modules/game'], function(ko, Game) {
+    ko.applyBindings(new Game);
 });

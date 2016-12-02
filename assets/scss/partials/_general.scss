@@ -7,6 +7,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  color: $dark-gray;
 }
 
 h1, h2 {
@@ -17,6 +18,15 @@ h1, h2 {
 
 p {
   margin-bottom: 1.25em;
+}
+
+b {
+  font-weight: $font-bold;
+}
+
+a {
+  color: $blue;
+
 }
 
 button {

@@ -1,0 +1,33 @@
+.scoreboard {
+  & {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-start;
+    text-align: center;
+    margin-bottom: 1em;
+  }
+
+  &__item {
+    padding: 0.4em calc(0.4em + 1vw);
+    flex-basis: 33%;
+
+    & + & {
+      border-left: 1px solid $light-gray;
+    }
+  }
+
+  &__label {
+    text-transform: uppercase;
+    display: block;
+    white-space: nowrap;
+  }
+
+  &__data {
+    font-size: 1.2em;
+    display: block;
+    max-width: 36vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
