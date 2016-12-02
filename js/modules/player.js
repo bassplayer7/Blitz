@@ -60,6 +60,7 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
         self.tiedScore          = ko.observable(false);
         self.scoreInput         = ko.observable();
         self.roundScore         = ko.observable(player.roundScore);
+        self.roundScoreVisible  = ko.observable(false);
         self.scoreFocus         = ko.observable(false);
         self.lastRecordedRound  = ko.observable(player.lastRecordedRound || 0);
 
@@ -97,6 +98,7 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
 
         self.currentScore.subscribe(function() {
             self.incrementRound();
+            self.roundScoreVisible(true);
             PubSub.publish('score.update', self);
             PubSub.publish('game.save', {});
         });
@@ -111,6 +113,28 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
             return !(self.scoreInput() && self.scoreInput().length > 0);
         });
 
+        self.renderRoundScore = ko.pureComputed(function() {
+            if (self.currentRoundScore() > 0) {
+                return '+' + self.currentRoundScore();
+            } else {
+                return self.currentRoundScore() / 2;
+            }
+        });
+
+        self.showRoundScore = ko.pureComputed(function(){
+            self.currentScore();
+
+            if (self.roundScoreVisible()) {
+                setTimeout(function() {
+                    self.roundScoreVisible(false);
+                }, 1500);
+
+                return true;
+            } else {
+                return false;
+            }
+        });
+
         var canUpdateRound = true;
 
         self.incrementRound = function(quiet) {
@@ -122,15 +146,9 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
                 canUpdateRound = false;
             }
 
-            // setTimeout(function() {
+            setTimeout(function() {
                 canUpdateRound = true;
-
-                // TODO: account for 0 scores in some players
-                // if (self.currentRound() === currentRoundNumber) {
-                //     self.currentRound(currentRoundNumber + 1);
-                //     console.log(`${self.name()} on round # ${self.currentRound()}`);
-                // }
-            // }, 30000);
+            }, 30000); // 30s
 
             if (!quiet) {
                 PubSub.publish('round.update', self);

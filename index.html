@@ -23,8 +23,8 @@
             <span class="scoreboard__label">Points Left</span>
             <b class="scoreboard__data" data-bind="text: remainingPoints"></b>
         </div>
-        <div class="scoreboard__item">
-            <span class="scoreboard__label" data-bind="css: { 'is-hidden--fade': !leadPlayerName() }">Lead Player</span>
+        <div class="scoreboard__item" data-bind="css: { 'is-hidden--fade': !leadPlayerName() }">
+            <span class="scoreboard__label">Lead Player</span>
             <b class="scoreboard__data" data-bind="text: leadPlayerName()"></b>
         </div>
         <!-- Avg score per round? -->
@@ -70,7 +70,10 @@
                         </svg>
                     </button>
                 </div>
-                <div data-bind="text: currentScore, click: changeColor" class="player__score"></div>
+                <div class="player__score" data-bind="click: changeColor">
+                    <div data-bind="text: renderRoundScore, css: { 'is-active': showRoundScore }" class="player__round-score"></div>
+                    <div data-bind="text: currentScore" class="player__full-score"></div>
+                </div>
             </div>
         </li>
     </ul>

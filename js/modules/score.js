@@ -83,8 +83,12 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
         this.leadPlayerName = ko.pureComputed(function() {
             var lead = self.leadPlayers();
 
-            if (lead.length > 0) {
+            if (lead.length === 1) {
                 return lead[0].name();
+            }
+
+            if (lead.length > 1) {
+                return 'Tied!'
             }
         });
 

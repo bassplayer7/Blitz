@@ -13,7 +13,7 @@ define(['knockout', 'pubsub'], function (ko, PubSub) {
         this.closeModal = ko.observable(false);
         this.gameLeaders = ko.observableArray([]);
 
-        this.isGameComplete = function() { // TODO: Make sure it's not a tie
+        this.isGameComplete = function() {
             var gameOver = false,
                 gameCanComplete = false;
 
@@ -28,8 +28,6 @@ define(['knockout', 'pubsub'], function (ko, PubSub) {
             if (self.gameLeaders().length > 1) {
                 gameCanComplete = false;
             }
-
-            console.log('Calculating Game Complete');
 
             return gameOver && gameCanComplete;
         };
