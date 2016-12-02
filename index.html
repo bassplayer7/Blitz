@@ -17,18 +17,25 @@
     <h1><span class="title__first">Dutch</span> <span class="title__second">Blitz&reg;</span> <span class="title__third">Scores</span></h1>
 </header>
 
-<section class="content">
-    <div data-bind="with: score">
-        <div class="game-status"><!-- data-bind="visible: !$root.gameInSetupMode()" -->
-            <span class="game-status__text">Points remaining: <b data-bind="text: remainingPoints"></b></span>
-            <span class="game-status__text" data-bind="css: { 'is-hidden--fade': !leadPlayerName() }">Lead Player: <b data-bind="text: leadPlayerName()"></b></span>
-            <!-- Avg score per round? -->
-            <div data-bind="with: $root.round">
-                <span class="game-status__text">Round #<b data-bind="text: currentRound"></b></span>
-            </div>
+<div data-bind="with: score">
+    <div class="scoreboard" data-bind="visible: !$root.gameInSetupMode()">
+        <div class="scoreboard__item">
+            <span class="scoreboard__label">Points Left</span>
+            <b class="scoreboard__data" data-bind="text: remainingPoints"></b>
+        </div>
+        <div class="scoreboard__item">
+            <span class="scoreboard__label" data-bind="css: { 'is-hidden--fade': !leadPlayerName() }">Lead Player</span>
+            <b class="scoreboard__data" data-bind="text: leadPlayerName()"></b>
+        </div>
+        <!-- Avg score per round? -->
+        <div class="scoreboard__item" data-bind="with: $root.round">
+            <span class="scoreboard__label">Round</span>
+            <b class="scoreboard__data">#<span data-bind="text: currentRound"></span></b>
         </div>
     </div>
+</div>
 
+<section class="content">
     <ul class="game" data-bind="foreach: players">
         <li class="game__player player" data-bind="css: { 'player--highest': leadScore, 'player--tied': tiedScore }, attr: { style: colorVariable() }">
             <div class="player__color"></div>
@@ -68,12 +75,20 @@
         </li>
     </ul>
 
-    <button type="button" data-bind="click: addPlayer, visible: !gameFirstView()" class="add-game-player">
-        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 9 9" class="add-game-player__icon">
-        <title>Add Score</title>
-        <rect x="3.5" width="2" height="9"/>
-        <rect y="3.5" width="9" height="2"/>
-    </svg>New Player</button>
+    <div class="secondary-action">
+        <div data-bind="with: round" class="secondary-action__item">
+            <button type="button" data-bind="click: roundCompleteAction, visible: !canMarkRoundAsComplete()" class="round-action--complete">Complete Round</button>
+        </div>
+
+        <div class="secondary-action__item">
+            <button type="button" data-bind="click: addPlayer, visible: !gameFirstView()" class="add-game-player">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 9 9" class="add-game-player__icon">
+                    <title>Add Score</title>
+                    <rect x="3.5" width="2" height="9"/>
+                    <rect y="3.5" width="9" height="2"/>
+                </svg>New Player</button>
+        </div>
+    </div>
 
     <div class="win-points__wrapper">
         <div class="win-points" data-bind="with: score">

@@ -15,17 +15,30 @@
   }
 }
 
+.secondary-action {
+  & {
+    display: flex;
+    justify-content: space-between;
+    padding-top: calc(1em + 3vh);
+    width: 100%;
+    clear: both;
+  }
+}
+
 .reset-game {
   background-color: $green;
 }
 
 .add-game-player {
-  clear: both;
-  float: right;
-  margin-top: 2em;
-
   &__icon {
     margin-right: 0.5em;
     fill: $dark-gray;
   }
+}
+
+.round-action--complete {
+  border-color: $offset-background;
+  color: #565656;
+  font-weight: $font-default;
+  opacity: 0.9;
 }
