@@ -1,0 +1,1 @@
+"use strict";require.config({paths:{knockout:"./lib/knockout-3.4.1",pubsub:"./lib/pubsub.min"}}),requirejs(["knockout","modules/game"],function(u,i){u.applyBindings(new i)});

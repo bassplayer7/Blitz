@@ -2,13 +2,25 @@
   "name": "blitz-scoreboard",
   "version": "1.0.0",
   "author": "Jesse Maxwell",
-  "homepage": "bassplayer7.github.io/blitz",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bassplayer7/Blitz/"
+  },
+  "homepage": "https://bassplayer7.github.io/blitz",
   "description": "Scoreboard for Dutch Blitz card game",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/bassplayer7/Blitz/issues",
+    "email": "jesse@swiftotter.com"
+  },
   "dependencies": {
+    "babel-preset-latest": "^6.16.0",
     "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
     "gulp-cssnano": "^2.1.2",
     "gulp-livereload": "^3.8.1",
     "gulp-sass": "^2.3.2",
+    "gulp-uglify": "^2.0.0",
     "gulp-util": "^3.0.7"
   }
 }
