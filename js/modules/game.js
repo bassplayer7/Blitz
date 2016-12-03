@@ -61,6 +61,12 @@ define(['knockout', 'pubsub', 'modules/player', 'modules/score', 'modules/persis
             return (self.players()[0] && !self.players()[0].name());
         };
 
+        this.tipsVisible = ko.observable(false);
+
+        this.toggleUserHelp = function() {
+            self.tipsVisible(!self.tipsVisible());
+        };
+
         self.players.subscribe(self.persist.saveGameData);
 
         PubSub.subscribe('perist.load', function(name, loadedGame) {

@@ -6,6 +6,8 @@
  */
 
 define(['knockout', 'pubsub'], function(ko, PubSub) {
+    var roundDuration = 0;
+
     return function (game) {
         var self = this;
         var defaultPartial = function() {
@@ -23,10 +25,9 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
 
         function markRoundAsComplete() {
             self.rounds.push(self.partialRound);
-            console.log("Round #" + self.rounds()[self.partialRound.topRound - 1].topRound + ' was saved');
             self.partialRound = defaultPartial();
 
-            PubSub.publish('round.complete', self.rounds()[self.rounds().length]);
+            PubSub.publish('round.complete', self.rounds().length + 1);
         }
 
         function roundInfoFrom(player) {
@@ -47,7 +48,6 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
 
                 if (!match) {
                     player.incrementRound(true);
-                    console.log(roundInfoFrom(player));
                     self.partialRound.players.push(roundInfoFrom(player));
                 }
             });
@@ -68,7 +68,6 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
                 finishPreviousRoundAndCreateNew();
             }
 
-            console.log(roundInfoFrom(player));
             self.partialRound.players.push(roundInfoFrom(player));
 
             self.partialRound.players.forEach(playerRound => {
@@ -104,7 +103,7 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
 
         this.canMarkRoundAsComplete = ko.pureComputed(function() {
             self.notifier();
-            return !self.partialRound.playersOnCurrentRound;
+            return !self.partialRound.playersOnCurrentRound && game.score.topScore();
         });
 
         this.resetRounds = function() {
@@ -115,6 +114,7 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
                 rounds = self.rounds();
 
             game.players().forEach(player => { player.lastRecordedRound(0) });
+            markRoundAsComplete();
             self.rounds.removeAll();
             self.partialRound = defaultPartial();
 
@@ -127,6 +127,12 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
             }, 100);
         };
 
+        this.incrementRoundDuration = function() {
+            setInterval(function() {
+                roundDuration++;
+            }, 1000);
+        };
+
         PubSub.subscribe('round.update', function(evt, player) {
             self.calculateRound(player);
         });
@@ -135,6 +141,13 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
             if (loadedGame.hasOwnProperty('rounds')) {
                 self.rounds(loadedGame.rounds);
             }
+
+            self.incrementRoundDuration();
+        });
+
+        PubSub.subscribe('round.complete', function() {
+            ga('send', 'event', 'Round', 'Duration', roundDuration);
+            roundDuration = 0;
         });
 
         PubSub.subscribe('game.reset', this.resetRounds);

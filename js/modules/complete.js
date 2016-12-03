@@ -29,6 +29,8 @@ define(['knockout', 'pubsub'], function (ko, PubSub) {
                 gameCanComplete = false;
             }
 
+            // console.log("Calc: Game Complete");
+
             return gameOver && gameCanComplete;
         };
 
