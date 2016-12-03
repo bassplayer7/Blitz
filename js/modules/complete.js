@@ -62,6 +62,10 @@ define(['knockout', 'pubsub'], function (ko, PubSub) {
             game.resetGame(true);
         };
 
+        PubSub.subscribe('game.reset', function() {
+            self.modalCanOpenAgain();
+        });
+
         PubSub.subscribe('round.complete', function(evt, roundNumber) {
             if (roundNumber > 1) {
                 self.calculateWinnerModal.notifySubscribers();
