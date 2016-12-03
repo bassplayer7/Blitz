@@ -11,26 +11,38 @@
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/touch-icon-very-large.png">
     <script src="https://use.typekit.net/zro0rut.js"></script>
     <script>try{Typekit.load({ async: true });}catch(e){}</script>
+
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+            m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+        ga('create', 'UA-66194702-2', 'auto');
+        ga('send', 'pageview');
+
+    </script>
 </head>
 <body>
 <header>
     <h1><span class="title__first">Dutch</span> <span class="title__second">Blitz&reg;</span> <span class="title__third">Scores</span></h1>
 </header>
 
-<div data-bind="with: score">
-    <div class="scoreboard" data-bind="visible: !$root.gameInSetupMode()">
-        <div class="scoreboard__item">
-            <span class="scoreboard__label">Points Left</span>
-            <b class="scoreboard__data" data-bind="text: remainingPoints"></b>
-        </div>
-        <div class="scoreboard__item" data-bind="css: { 'is-hidden--fade': !leadPlayerName() }">
-            <span class="scoreboard__label">Lead Player</span>
-            <b class="scoreboard__data" data-bind="text: leadPlayerName()"></b>
-        </div>
-        <!-- Avg score per round? -->
-        <div class="scoreboard__item" data-bind="with: $root.round">
-            <span class="scoreboard__label">Round</span>
-            <b class="scoreboard__data">#<span data-bind="text: currentRound"></span></b>
+<div data-bind="with: score" class="scoreboard__block">
+    <div class="scoreboard__wrapper" data-bind="css: {'is-active': !$root.gameInSetupMode() }">
+        <div class="scoreboard">
+            <div class="scoreboard__item">
+                <span class="scoreboard__label">Points Left</span>
+                <b class="scoreboard__data" data-bind="text: remainingPoints"></b>
+            </div>
+            <div class="scoreboard__item" data-bind="css: { 'is-hidden--fade': !leadPlayerName() }">
+                <span class="scoreboard__label">Lead Player</span>
+                <b class="scoreboard__data" data-bind="text: leadPlayerName()"></b>
+            </div>
+            <div class="scoreboard__item" data-bind="with: $root.round">
+                <span class="scoreboard__label">Round</span>
+                <b class="scoreboard__data">#<span data-bind="text: currentRound"></span></b>
+            </div>
         </div>
     </div>
 </div>
@@ -80,7 +92,7 @@
 
     <div class="secondary-action">
         <div data-bind="with: round" class="secondary-action__item">
-            <button type="button" data-bind="click: roundCompleteAction, visible: !canMarkRoundAsComplete()" class="round-action--complete">Complete Round</button>
+            <button type="button" data-bind="click: roundCompleteAction, visible: canMarkRoundAsComplete()" class="round-action--complete">Complete Round</button>
         </div>
 
         <div class="secondary-action__item">
@@ -124,25 +136,30 @@
             <button type="button" class="win-splash__action" data-bind="click: closeAndReset">Play Again</button>
         </div>
     </div>
+
+    <div class="user-help">
+        <div class="user-help__actions">
+            <span role="button" class="user-help__action" data-bind="click: toggleUserHelp">Tips</span>
+            <a target="_blank" class="user-help__action" href="https://www.amazon.com/gp/product/B000BBU0KS/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B000BBU0KS&linkCode=as2&tag=bluegpiano-20&linkId=90f961303eef30fa6727bd1871ccfd62" onclick="ga('send', 'event', 'Link', 'Outbound', 'Amazon Affiliate');">Purchase Dutch Blitz <img src="//ir-na.amazon-adsystem.com/e/ir?t=bluegpiano-20&l=am2&o=1&a=B000BBU0KS" width="1" height="1" border="0" alt="" style="border:none !important; margin:0 !important;" /></a>
+        </div>
+        <div class="user-help__content" data-bind="css: {'is-visible': tipsVisible }">
+            <h4>Tips</h4>
+            <ul class="user-help__tips">
+                <li>Tap score to change player's color. Now you can match your color with your card color.</li>
+                <li>Use the up/down arrows above your keyboard to move from score to score. It will assume it is a positive score.</li>
+                <li>Your game is always saved to your device. Go ahead and Google who invented Dutch Blitz&reg; and then pick up here where you left off.</li>
+                <li>There's no need to tap complete round every time. It takes care of it automatically.</li>
+            </ul>
+        </div>
+    </div>
 </section>
 
 <footer>
-    <p>Developed by Jesse Maxwell (<a href="https://swiftotter.com">SwiftOtter Studios</a>)</p>
+    <p>Developed by Jesse Maxwell (<a href="https://swiftotter.com" onclick="ga('send', 'event', 'Link', 'Outbound', 'SwiftOtter');">SwiftOtter Studios</a>)</p>
 
-    <p><a href="https://github.com/bassplayer7/Blitz/issues">Ping me</a> to suggest an enhancement or report a bug.</p>
-    <p><a href="credits.html" class="credits">Credits</a></p>
+    <p><a href="https://github.com/bassplayer7/Blitz/issues" onclick="ga('send', 'event', 'Link', 'Outbound', 'Github Issues');">Ping me</a> to suggest an enhancement or report a bug.</p>
+    <p><a href="credits.html" class="credits">Credits / Info</a></p>
 </footer>
-
-<script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-
-    ga('create', 'UA-66194702-2', 'auto');
-    ga('send', 'pageview');
-
-</script>
 
 <script data-main="js/init" src="js/lib/require.js" async></script>
 <script src="js/lib/instantclick.min.js" data-no-instant></script>

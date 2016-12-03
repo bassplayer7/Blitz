@@ -142,17 +142,17 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
 
             if (canUpdateRound) {
                 self.lastRecordedRound(currentRoundNumber + 1);
-                console.log(`${self.name()} completed round # ${self.lastRecordedRound()}`);
+                // console.log(`${self.name()} completed round # ${self.lastRecordedRound()}`);
                 canUpdateRound = false;
+
+                if (!quiet) {
+                    PubSub.publish('round.update', self);
+                }
             }
 
             setTimeout(function() {
                 canUpdateRound = true;
             }, 30000); // 30s
-
-            if (!quiet) {
-                PubSub.publish('round.update', self);
-            }
         };
 
         /**
@@ -164,6 +164,11 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
             var actualRoundScore = (this.currentRoundScore() * -1) * 2;
             // Update the currentScore by adjusting the roundScore
             self.roundScore(actualRoundScore);
-        }
+        };
+
+        PubSub.subscribe('round.complete', function () {
+            canUpdateRound = true;
+            // console.log("Can update Round");
+        })
     }
 });

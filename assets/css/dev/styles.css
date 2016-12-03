@@ -83,9 +83,20 @@ b {
 
 /* line 27, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
 a {
-  color: #025176; }
+  color: #025176;
+  text-decoration: none;
+  border-bottom: 2px solid transparent; }
+  /* line 32, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+  a:hover {
+    border-bottom-color: #025176;
+    background-color: rgba(2, 81, 118, 0.1); }
 
-/* line 32, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+/* line 38, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+h4 {
+  font-size: 1.4em;
+  margin-bottom: 1rem; }
+
+/* line 43, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
 button {
   padding: 1em;
   border-radius: 4px;
@@ -94,11 +105,11 @@ button {
   font-weight: 700;
   font-size: 1em;
   outline: none; }
-  /* line 41, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+  /* line 52, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
   button:active {
     transform: translate3d(1px, 1px, 0); }
 
-/* line 46, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+/* line 57, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
 input {
   font-size: 1em;
   padding: 1em 0.5em;
@@ -107,15 +118,15 @@ input {
   border-radius: 4px;
   outline: 1px #025176; }
 
-/* line 55, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+/* line 66, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
 li {
   list-style: none; }
 
-/* line 59, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+/* line 70, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
 .is-hidden {
   display: none; }
 
-/* line 63, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+/* line 74, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
 .content {
   padding: 0 calc(1em + 1vw);
   width: 35rem;
@@ -451,58 +462,59 @@ footer {
   box-shadow: 0 0 40px #505050;
   overflow: hidden;
   transform: scale(0.8) translateY(-120vh);
-  opacity: 0; }
+  opacity: 0;
+  z-index: 20; }
 
-/* line 70, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+/* line 71, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
 .win-splash--visible {
   animation-name: display-card;
   animation-fill-mode: forwards;
   animation-duration: 800ms;
   animation-timing-function: ease-in; }
 
-/* line 77, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+/* line 78, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
 .win-splash--closing {
   animation-name: close-card;
   animation-fill-mode: forwards;
   animation-duration: 250ms;
   animation-timing-function: ease-out; }
 
-/* line 84, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+/* line 85, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
 .win-splash__winner-info {
   padding-top: 2vh; }
 
-/* line 88, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+/* line 89, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
 .win-splash__winner-prefix {
   font-size: 1.75em; }
 
-/* line 92, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+/* line 93, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
 .win-splash__winner {
   font-family: "cabazon", cursive, sans-serif;
   font-size: 2.5em;
   line-height: 1;
   padding-top: 1rem; }
 
-/* line 99, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+/* line 100, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
 .win-splash__explanatory {
   padding-top: 1.25rem; }
 
-/* line 103, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+/* line 104, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
 .win-splash__hero {
   flex-grow: 1;
   max-height: 30vh;
   width: 100%; }
 
-/* line 109, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+/* line 110, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
 .win-splash__icon {
   fill: #fff;
   max-width: 30vh; }
   @media (max-width: 30rem) {
-    /* line 109, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+    /* line 110, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
     .win-splash__icon {
       margin-top: 50%;
       transform: translateY(-50%); } }
 
-/* line 119, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+/* line 120, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
 .win-splash__close {
   position: absolute;
   top: 0.5rem;
@@ -514,11 +526,11 @@ footer {
   padding: 0.1em;
   border: 0; }
 
-/* line 131, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+/* line 132, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
 .win-splash__close-icon {
   stroke: #505050; }
 
-/* line 135, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
+/* line 136, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_splash.scss */
 .win-splash__action {
   width: 100%;
   margin-top: 1.25em;
@@ -526,28 +538,45 @@ footer {
   border: 0; }
 
 /* line 2, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_scoreboard.scss */
+.scoreboard__wrapper {
+  width: 35rem;
+  max-width: 100vw;
+  margin: 0 auto;
+  overflow: hidden;
+  max-height: 2rem;
+  transition: max-height 300ms ease-in-out; }
+  /* line 10, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_scoreboard.scss */
+  .scoreboard__wrapper.is-active {
+    max-height: 6rem; }
+
+/* line 15, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_scoreboard.scss */
 .scoreboard {
   display: flex;
   justify-content: space-around;
   align-items: flex-start;
   text-align: center;
-  margin-bottom: 1em; }
+  margin-bottom: 1em;
+  transform: translateY(-100%);
+  transition: transform 300ms ease-in-out; }
+  /* line 24, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_scoreboard.scss */
+  .scoreboard__wrapper.is-active .scoreboard {
+    transform: translateY(0); }
 
-/* line 10, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_scoreboard.scss */
+/* line 29, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_scoreboard.scss */
 .scoreboard__item {
   padding: 0.4em calc(0.4em + 1vw);
   flex-basis: 33%; }
-  /* line 14, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_scoreboard.scss */
+  /* line 33, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_scoreboard.scss */
   .scoreboard__item + .scoreboard__item {
     border-left: 1px solid #d8d8d8; }
 
-/* line 19, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_scoreboard.scss */
+/* line 38, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_scoreboard.scss */
 .scoreboard__label {
   text-transform: uppercase;
   display: block;
   white-space: nowrap; }
 
-/* line 25, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_scoreboard.scss */
+/* line 44, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_scoreboard.scss */
 .scoreboard__data {
   font-size: 1.2em;
   display: block;
@@ -555,3 +584,44 @@ footer {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap; }
+
+/* line 2, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_help.scss */
+.user-help {
+  margin: 3em 1em 1em; }
+
+/* line 6, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_help.scss */
+.user-help__actions {
+  display: flex;
+  justify-content: space-between;
+  opacity: 0.8; }
+
+/* line 12, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_help.scss */
+.user-help__action {
+  color: #025176; }
+  /* line 15, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_help.scss */
+  .user-help__action:hover {
+    border-bottom: 2px solid #025176;
+    background-color: rgba(2, 81, 118, 0.1); }
+
+/* line 21, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_help.scss */
+.user-help__content {
+  max-height: 0;
+  transition: 200ms max-height ease-in-out;
+  overflow: hidden; }
+  /* line 26, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_help.scss */
+  .user-help__content.is-visible {
+    max-height: 500px; }
+
+/* line 32, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_help.scss */
+.user-help__tips li {
+  margin-bottom: 1em; }
+  /* line 35, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_help.scss */
+  .user-help__tips li::before {
+    content: '';
+    display: inline-block;
+    vertical-align: middle;
+    height: 0.95em;
+    width: 0.65em;
+    border-radius: 0.1em;
+    background-color: #027247;
+    margin-right: 0.4em; }
