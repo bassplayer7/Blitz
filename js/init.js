@@ -8,7 +8,7 @@
 require.config({
     paths: {
         knockout: './lib/knockout-3.4.1',
-        pubsub: './lib/pubsub.min'
+        pubsub: './lib/pubsub.min',
     }
 });
 

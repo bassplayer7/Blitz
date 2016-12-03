@@ -16,8 +16,6 @@ define(['knockout', 'pubsub', 'modules/player', 'modules/score', 'modules/persis
         this.round = new Round(self);
         this.complete = new Complete(self);
 
-        this.wasChanged = function() { console.log('Error') };
-
         this.addPlayer = function() {
             self.players.push(new Player());
         };
