@@ -82,5 +82,12 @@ define(['knockout', 'pubsub', 'modules/player', 'modules/score', 'modules/persis
         });
 
         PubSub.publish('game.load', self);
+
+        [].forEach.call(document.getElementsByClassName('js-vote'), voteEl => {
+            voteEl.addEventListener('click', vote => {
+                vote.removeAttribute('onclick');
+                vote.textContent = 'Thanks!';
+            });
+        });
     };
 });

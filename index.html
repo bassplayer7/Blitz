@@ -9,6 +9,10 @@
     <link rel="apple-touch-icon" href="assets/images/touch-icon.png">
     <link rel="apple-touch-icon" sizes="120x120" href="assets/images/touch-icon-large.png">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/images/touch-icon-very-large.png">
+    <meta name="description" content="Easily keep track of Dutch Blitz game score with this site that is optimized for mobile devices. No more paper and math to keep track of your score."/>
+    <meta name="og:title" content="Easily track Dutch Blitz scores" />
+    <meta name="og:description" content="No more paper scoring! Keep track of Dutch Blitz game scores with ease. A scoreboard shows current game information and who is leading."/>
+    <meta name="og:image" content="assets/images/touch-icon-very-large.png" />
     <script src="https://use.typekit.net/zro0rut.js"></script>
     <script>try{Typekit.load({ async: true });}catch(e){}</script>
 
@@ -140,6 +144,7 @@
     <div class="user-help">
         <div class="user-help__actions">
             <span role="button" class="user-help__action" data-bind="click: toggleUserHelp">Tips</span>
+            <a href="http://www.dutchblitz.com/wp-content/uploads/Dutch_Blitz_Directions_Web.pdf" class="user-help__action" target="_blank">Rules (pdf)</a>
             <a target="_blank" class="user-help__action" href="https://www.amazon.com/gp/product/B000BBU0KS/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B000BBU0KS&linkCode=as2&tag=bluegpiano-20&linkId=90f961303eef30fa6727bd1871ccfd62" onclick="ga('send', 'event', 'Link', 'Outbound', 'Amazon Affiliate');">Purchase Dutch Blitz <img src="//ir-na.amazon-adsystem.com/e/ir?t=bluegpiano-20&l=am2&o=1&a=B000BBU0KS" width="1" height="1" border="0" alt="" style="border:none !important; margin:0 !important;" /></a>
         </div>
         <div class="user-help__content" data-bind="css: {'is-visible': tipsVisible }">
@@ -149,6 +154,13 @@
                 <li>Use the up/down arrows above your keyboard to move from score to score. It will assume it is a positive score.</li>
                 <li>Your game is always saved to your device. Go ahead and Google who invented Dutch Blitz&reg; and then pick up here where you left off.</li>
                 <li>There's no need to tap complete round every time. It takes care of it automatically.</li>
+            </ul>
+
+            <h4>Feature Requests</h4>
+            <p>Here are some ideas for future ideas. After using the scoreboard, vote by clicking the links for which ones you want the most.</p>
+            <ul class="user-help__tips">
+                <li>Card Mode - instead of recording points earned, enter cards played and cards left in the Blitz pile. <span role="button" class="link js-vote" onclick="ga('send', 'event', 'User Feedback', 'Vote', 'Cards');">Vote</span></li>
+                <li>Multi-player - hook up multiple devices to the same game so everyone can enter their own score. <span role="button" class="link js-vote" onclick="ga('send', 'event', 'User Feedback', 'Vote', 'Multi-Player');">Vote</span></li>
             </ul>
         </div>
     </div>

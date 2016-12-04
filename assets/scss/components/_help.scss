@@ -20,11 +20,11 @@
 
   &__content {
     max-height: 0;
-    transition: 200ms max-height ease-in-out;
+    transition: 300ms max-height ease-in-out;
     overflow: hidden;
 
     &.is-visible {
-      max-height: 500px;
+      max-height: 50rem;
     }
   }
 
