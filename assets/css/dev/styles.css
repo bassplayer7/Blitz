@@ -82,12 +82,12 @@ b {
   font-weight: 700; }
 
 /* line 27, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
-a {
+a, .link {
   color: #025176;
   text-decoration: none;
   border-bottom: 2px solid transparent; }
   /* line 32, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
-  a:hover {
+  a:hover, .link:hover {
     border-bottom-color: #025176;
     background-color: rgba(2, 81, 118, 0.1); }
 
@@ -360,7 +360,7 @@ footer {
   z-index: 4;
   width: 100%;
   height: 100%;
-  padding: 0.6em 1em;
+  padding: 0.6em 0.8em;
   background-color: #aaa;
   background-color: var(--player-color);
   transition: 200ms transform ease-in-out; }
@@ -607,11 +607,11 @@ footer {
 /* line 21, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_help.scss */
 .user-help__content {
   max-height: 0;
-  transition: 200ms max-height ease-in-out;
+  transition: 300ms max-height ease-in-out;
   overflow: hidden; }
   /* line 26, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_help.scss */
   .user-help__content.is-visible {
-    max-height: 500px; }
+    max-height: 50rem; }
 
 /* line 32, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_help.scss */
 .user-help__tips li {
