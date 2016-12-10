@@ -1,10 +1,25 @@
 /* line 21, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_variables.scss */
 :root {
   --blue: #025176;
-  --orange: #D04410;
-  --yellow: #CFA903;
+  --blue-r: 2;
+  --blue-g: 81;
+  --blue-b: 118;
+  --orange: #d04410;
+  --orange-r: 208;
+  --orange-g: 68;
+  --orange-b: 16;
+  --yellow: #cfa903;
+  --yellow-r: 207;
+  --yellow-g: 169;
+  --yellow-b: 3;
   --green: #027247;
-  --player-color: #aaa; }
+  --green-r: 2;
+  --green-g: 114;
+  --green-b: 71;
+  --player-color: #aaa;
+  --player-color-r: #aaa;
+  --player-color-g: #aaa;
+  --player-color-b: #aaa; }
 
 /* line 1, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_reset.scss */
 * {
@@ -147,7 +162,7 @@ header {
 
 /* line 13, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_header.scss */
 .title__second {
-  color: #D04410; }
+  color: #d04410; }
 
 /* line 17, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_header.scss */
 .title__third {
@@ -181,14 +196,14 @@ footer {
 /* line 10, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_game.scss */
 .game-action__item {
   border: 0;
-  background-color: #D04410;
+  background-color: #d04410;
   color: #fff;
   width: 48%; }
 
 /* line 19, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_game.scss */
 .secondary-action {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding-top: calc(1em + 3vh);
   width: 100%;
   clear: both; }
@@ -212,10 +227,10 @@ footer {
 /* line 2, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
 .player {
   position: relative;
-  margin-bottom: 1em;
   border-left: 4px solid var(--player-color);
-  margin-left: calc((1em + 1vw) * -1);
-  padding-left: calc(1em + 1vw); }
+  margin: 0 calc((1em + 1vw) * -1) 0.5em;
+  padding: 0.5em calc(1em + 1vw);
+  background-color: rgba(var(--player-color-r), var(--player-color-g), var(--player-color-b), 0.08); }
 
 /* line 10, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
 .player--highest {
@@ -243,18 +258,18 @@ footer {
 
 /* line 38, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
 .player + .player {
-  margin-top: 2em; }
+  margin-top: 0.8em; }
 
 /* line 42, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
 .player__name {
-  padding-bottom: 0.5em; }
+  padding-bottom: 0.25em; }
 
 /* line 46, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
 .player__name-group {
-  padding: 0.1em 0.5em;
+  padding: 0 0.5em;
   border: 1px solid transparent;
   display: block;
-  font-size: 1.2em;
+  font-size: 1.1em;
   width: 100%;
   white-space: nowrap; }
 
@@ -306,39 +321,40 @@ footer {
   display: block;
   border-radius: 0;
   border-width: 0 1px 4px;
-  background-color: #eee;
+  background-color: #fff;
   width: 6rem;
   -webkit-appearance: none;
   font-size: 1.1em;
-  padding: 0.9em 0.5em; }
+  padding: 0.7em 0.5em; }
 
 /* line 110, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
 .player__score-button {
   background-color: #eee;
+  background-color: #fff;
   border: 0 solid #aaa;
   transition: opacity 200ms ease-out, width 200ms ease-out, padding 200ms ease-out, border 200ms ease-out;
   overflow: hidden; }
 
-/* line 117, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
+/* line 118, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
 .player__score-button--minus {
   border-radius: 4px 0 0 4px;
   border-right: 1px; }
 
-/* line 122, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
+/* line 123, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
 .player__score-button--add {
   border-radius: 0 4px 4px 0;
   border-left: 1px; }
 
-/* line 128, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
+/* line 129, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
 .player__score-icon {
   fill: #505050; }
 
-/* line 132, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
+/* line 133, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
 .player__score {
   color: #fff;
   font-size: 1.2em;
   font-weight: 700;
-  padding: 0.6em 1em;
+  padding: 0.6em 0.8em;
   border-bottom: 4px solid #d8d8d8;
   min-width: 4rem;
   text-align: center;
@@ -347,12 +363,12 @@ footer {
   background-color: #aaa;
   background-color: var(--player-color); }
 
-/* line 146, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
+/* line 147, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
 .player__full-score {
   position: relative;
   z-index: 2; }
 
-/* line 151, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
+/* line 152, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
 .player__round-score {
   position: absolute;
   right: 100%;
@@ -364,11 +380,11 @@ footer {
   background-color: #aaa;
   background-color: var(--player-color);
   transition: 200ms transform ease-in-out; }
-  /* line 163, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
+  /* line 164, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
   .player__round-score.is-active {
     transform: translateX(100%); }
 
-/* line 168, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
+/* line 169, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
 .player__status-note {
   display: none;
   font-size: 0.9rem;
@@ -377,15 +393,15 @@ footer {
   color: #aaa;
   letter-spacing: 0.4px; }
 
-/* line 180, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
+/* line 181, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
 .has-empty-score .player__score-input {
   border-color: #aaa;
   border-left-color: transparent;
   border-right-color: transparent; }
 
-/* line 186, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
+/* line 187, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_player.scss */
 .has-empty-score .player__score-button {
-  opacity: 0.2; }
+  opacity: 0.4; }
 
 /* line 2, /Users/JesseMaxwell/Sites/Blitz/assets/scss/components/_win_points.scss */
 .win-points {
@@ -451,7 +467,7 @@ footer {
   width: 96vw;
   top: 2vh;
   left: 2vw;
-  background-color: #D04410;
+  background-color: #d04410;
   color: #fff;
   padding: 4vw;
   text-align: center;

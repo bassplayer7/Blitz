@@ -1,7 +1,7 @@
-$blue: #025176;
-$orange: #D04410;
-$yellow: #CFA903;
-$green: #027247;
+$blue: rgb(2, 81, 118);
+$orange: rgb(208, 68, 16);
+$yellow: rgb(207, 169, 3);
+$green: rgb(2, 114, 71);
 $white: #fff;
 
 $offset-background: #eee;
@@ -20,8 +20,27 @@ $border-heavy: 4px;
 
 :root {
   --blue: $blue;
+  --blue-r: 2;
+  --blue-g: 81;
+  --blue-b: 118;
+
   --orange: $orange;
+  --orange-r: 208;
+  --orange-g: 68;
+  --orange-b: 16;
+
   --yellow: $yellow;
+  --yellow-r: 207;
+  --yellow-g: 169;
+  --yellow-b: 3;
+
   --green: $green;
+  --green-r: 2;
+  --green-g: 114;
+  --green-b: 71;
+
   --player-color: $mid-gray;
+  --player-color-r: $mid-gray;
+  --player-color-g: $mid-gray;
+  --player-color-b: $mid-gray;
 }

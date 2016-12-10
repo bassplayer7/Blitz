@@ -96,9 +96,11 @@
     </ul>
 
     <div class="secondary-action">
+        <!--
         <div data-bind="with: round" class="secondary-action__item">
-            <button type="button" data-bind="click: roundCompleteAction, visible: canMarkRoundAsComplete()" class="round-action--complete">Complete Round</button>
+            <button type="button" data-bind="click: roundCompleteAction, visible: canMarkRoundAsComplete()" class="round-action--complete">Finish Game</button>
         </div>
+        -->
 
         <div class="secondary-action__item">
             <button type="button" data-bind="click: addPlayer, visible: !gameFirstView()" class="add-game-player">
@@ -174,7 +176,7 @@
     <p><a href="credits.html" class="credits">Credits / Info</a></p>
 </footer>
 
-<script data-main="js/build/init" src="js/lib/require.js" async></script>
+<script data-main="js/init" src="js/lib/require.js" async></script>
 <script src="js/lib/instantclick.min.js" data-no-instant></script>
 <script data-no-instant>InstantClick.init();</script>
 </body>
