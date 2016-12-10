@@ -65,7 +65,7 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
         self.lastRecordedRound  = ko.observable(player.lastRecordedRound || 0);
 
         self.colorVariable = function() {
-            return '--player-color: var(--' + self.color() + ')';
+            return `--player-color: var(--${self.color()}); --player-color-r: var(--${self.color()}-r); --player-color-g: var(--${self.color()}-g); --player-color-b: var(--${self.color()}-b)`;
         };
 
         self.changeColor = function() {
@@ -142,7 +142,6 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
 
             if (canUpdateRound) {
                 self.lastRecordedRound(currentRoundNumber + 1);
-                // console.log(`${self.name()} completed round # ${self.lastRecordedRound()}`);
                 canUpdateRound = false;
 
                 if (!quiet) {
@@ -152,7 +151,7 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
 
             setTimeout(function() {
                 canUpdateRound = true;
-            }, 30000); // 30s
+            }, 60000); // 1m
         };
 
         /**

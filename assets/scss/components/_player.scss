@@ -1,10 +1,10 @@
 .player {
   & {
     position: relative;
-    margin-bottom: 1em;
     border-left: 4px solid var(--player-color);
-    margin-left: calc((1em + 1vw) * -1);
-    padding-left: calc(1em + 1vw);
+    margin: 0 calc((1em + 1vw) * -1) 0.5em;
+    padding: 0.5em calc(1em + 1vw);
+    background-color: #{'rgba(var(--player-color-r), var(--player-color-g), var(--player-color-b), 0.08)'};
   }
 
   &--highest {
@@ -36,18 +36,18 @@
   }
 
   & + & {
-    margin-top: 2em;
+    margin-top: 0.8em;
   }
 
   &__name {
-    padding-bottom: 0.5em;
+    padding-bottom: 0.25em;
   }
 
   &__name-group {
-    padding: 0.1em 0.5em;
+    padding: 0 0.5em;
     border: 1px solid transparent;
     display: block;
-    font-size: 1.2em;
+    font-size: 1.1em;
     width: 100%;
     white-space: nowrap;
   }
@@ -99,16 +99,17 @@
     display: block;
     border-radius: 0;
     border-width: 0 1px $border-heavy;
-    background-color: $offset-background;
+    background-color: $white;
     width: 6rem;
     -webkit-appearance: none;
     font-size: 1.1em;
-    padding: 0.9em 0.5em;
+    padding: 0.7em 0.5em;
   }
 
   &__score-button {
     & {
       background-color: $offset-background;
+      background-color: $white;
       border: 0 solid $mid-gray;
       transition: opacity 200ms ease-out, width 200ms ease-out, padding 200ms ease-out, border 200ms ease-out;
       overflow: hidden;
@@ -133,7 +134,7 @@
     color: $white;
     font-size: 1.2em;
     font-weight: $font-bold;
-    padding: 0.6em 1em;
+    padding: 0.6em 0.8em;
     border-bottom: $border-heavy solid $light-gray;
     min-width: 4rem;
     text-align: center;
@@ -184,7 +185,7 @@
     }
 
     &__score-button {
-      opacity: 0.2;
+      opacity: 0.4;
     }
   }
 }
