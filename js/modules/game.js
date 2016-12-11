@@ -61,24 +61,25 @@ define(['knockout', 'pubsub', 'modules/player', 'modules/score', 'modules/persis
         };
 
         var scoreTimeout = null;
-        this.scoreBeingEntered = function () {
-            self.entryInProgress = true;
 
-            scoreTimeout = setTimeout(function() {
+        this.scoreBeingEntered = function() {
+            self.entryInProgress = true;
+            window.clearTimeout(scoreTimeout);
+
+            scoreTimeout = window.setTimeout(function() {
                 self.entryInProgress = false;
-            }, 500);
+            }, 1000);
         };
 
         this.centerGame = function() {
-            if (!self.entryInProgress) {
-                setTimeout(function () {
+            setTimeout(function() {
+                if (!self.entryInProgress) {
                     window.scroll({
                         top: document.getElementsByClassName('scoreboard__block')[0].offsetTop,
-                        left: 0,
                         behavior: 'smooth'
                     });
-                }, 200);
-            }
+                }
+            }, 200);
         };
 
         this.tipsVisible = ko.observable(false);
