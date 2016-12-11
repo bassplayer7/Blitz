@@ -59,6 +59,14 @@ define(['knockout', 'pubsub', 'modules/player', 'modules/score', 'modules/persis
             return (self.players()[0] && !self.players()[0].name());
         };
 
+        this.centerGame = function() {
+            window.scroll({
+                top: document.getElementsByClassName('scoreboard__block')[0].offsetTop,
+                left: 0,
+                behavior: 'smooth'
+            });
+        };
+
         this.tipsVisible = ko.observable(false);
 
         this.toggleUserHelp = function() {
