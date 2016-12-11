@@ -181,5 +181,10 @@
 <script src="js/lib/instantclick.min.js" data-no-instant></script>
 <script src="js/build/lib/smoothscroll.js"></script>
 <script data-no-instant>InstantClick.init();</script>
+    <script type="text/javascript">
+    window.addEventListener("load", function() {
+	    setTimeout(function(){ window.scrollTo(0, 1); }, 0);
+    });
+    </script>
 </body>
 </html>
