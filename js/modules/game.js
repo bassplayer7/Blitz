@@ -15,6 +15,7 @@ define(['knockout', 'pubsub', 'modules/player', 'modules/score', 'modules/persis
         this.score = new Score(self);
         this.round = new Round(self);
         this.complete = new Complete(self);
+        this.entryInProgress = true;
 
         this.addPlayer = function() {
             self.players.push(new Player());
@@ -59,12 +60,25 @@ define(['knockout', 'pubsub', 'modules/player', 'modules/score', 'modules/persis
             return (self.players()[0] && !self.players()[0].name());
         };
 
+        var scoreTimeout = null;
+        this.scoreBeingEntered = function () {
+            self.entryInProgress = true;
+
+            scoreTimeout = setTimeout(function() {
+                self.entryInProgress = false;
+            }, 500);
+        };
+
         this.centerGame = function() {
-            window.scroll({
-                top: document.getElementsByClassName('scoreboard__block')[0].offsetTop,
-                left: 0,
-                behavior: 'smooth'
-            });
+            if (!self.entryInProgress) {
+                setTimeout(function () {
+                    window.scroll({
+                        top: document.getElementsByClassName('scoreboard__block')[0].offsetTop,
+                        left: 0,
+                        behavior: 'smooth'
+                    });
+                }, 200);
+            }
         };
 
         this.tipsVisible = ko.observable(false);
