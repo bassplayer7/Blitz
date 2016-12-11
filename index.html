@@ -78,7 +78,7 @@
                             <rect y="3.5" width="9" height="2"/>
                         </svg>
                     </button>
-                    <input type="tel" title="Player Score" data-bind="value: roundScore, hasFocus: scoreFocus, textInput: scoreInput, event: { blur: $root.centerGame }" placeholder="Points" class="player__score-input"/>
+                    <input type="tel" title="Player Score" data-bind="value: roundScore, hasFocus: scoreFocus, textInput: scoreInput, event: { focusout: $root.centerGame, focus: $root.scoreBeingEntered }" placeholder="Points" class="player__score-input"/>
                     <button type="button" data-bind="click: updateScore" class="player__score-button player__score-button--add" title="Add Points to Score">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 9 9" class="player__score-icon">
                             <title>Add Score</title>
