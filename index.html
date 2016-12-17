@@ -72,7 +72,8 @@
             </div>
             <div class="player__score-block" data-bind="css: { 'has-empty-score': scoreInputIsEmpty() }">
                 <div class="player__score-entry">
-                    <button type="button" data-bind="click: minusScore" class="player__score-button player__score-button--minus" title="Subtract points from score">
+                    <!-- click: minusScore, -->
+                    <button type="button" data-bind="event: { mouseup: minusScore, touchstart: minusScore }" class="player__score-button player__score-button--minus" title="Subtract points from score">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 9 9" class="player__score-icon">
                             <title>Subtract Score</title>
                             <rect y="3.5" width="9" height="2"/>
@@ -177,7 +178,5 @@
 </footer>
 
 <script data-main="js/build/init" src="js/lib/require.js" async></script>
-<script src="js/lib/instantclick.min.js" data-no-instant></script>
-<script data-no-instant>InstantClick.init();</script>
 </body>
 </html>

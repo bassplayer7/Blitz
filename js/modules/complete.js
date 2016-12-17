@@ -64,6 +64,10 @@ define(['knockout', 'pubsub'], function (ko, PubSub) {
             self.modalCanOpenAgain();
         });
 
+        PubSub.subscribe('game.score.change', function() {
+            self.modalCanOpenAgain();
+        });
+
         PubSub.subscribe('round.complete', function(evt, roundNumber) {
             if (roundNumber > 1) {
                 self.calculateWinnerModal.notifySubscribers();

@@ -81,6 +81,7 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
                 return self.score();
             },
             write: function(value) {
+                console.log("updating score");
                 self.score(value);
             }
         });
@@ -158,7 +159,9 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
          * Because the roundScore is calculated when focus is removed from the input, the score actually changes before
          * this function is called. As a result, it takes the previous value of the input and works with that.
          */
-        self.minusScore = function() {
+        self.minusScore = function(model, event) {
+            event.currentTarget.focus();
+
             // Take the actual score, convert it to negative and double it (because it was previously added to score)
             var actualRoundScore = (this.currentRoundScore() * -1) * 2;
             // Update the currentScore by adjusting the roundScore

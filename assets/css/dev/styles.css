@@ -71,10 +71,14 @@ table {
   border-spacing: 0; }
 
 /* line 1, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+html {
+  touch-action: manipulation; }
+
+/* line 5, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
 html, body {
   min-height: 100vh; }
 
-/* line 5, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+/* line 9, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
 body {
   font: 16px/1.5 "Lato", sans-serif;
   display: flex;
@@ -82,36 +86,36 @@ body {
   justify-content: space-between;
   color: #505050; }
 
-/* line 13, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+/* line 17, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
 h1, h2 {
   font-family: "cabazon", cursive, sans-serif;
   letter-spacing: 1.5px;
   font-size: 2.2rem; }
 
-/* line 19, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+/* line 23, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
 p {
   margin-bottom: 1.25em; }
 
-/* line 23, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+/* line 27, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
 b {
   font-weight: 700; }
 
-/* line 27, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+/* line 31, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
 a, .link {
   color: #025176;
   text-decoration: none;
   border-bottom: 2px solid transparent; }
-  /* line 32, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+  /* line 36, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
   a:hover, .link:hover {
     border-bottom-color: #025176;
     background-color: rgba(2, 81, 118, 0.1); }
 
-/* line 38, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+/* line 42, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
 h4 {
   font-size: 1.4em;
   margin-bottom: 1rem; }
 
-/* line 43, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+/* line 47, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
 button {
   padding: 1em;
   border-radius: 4px;
@@ -120,11 +124,11 @@ button {
   font-weight: 700;
   font-size: 1em;
   outline: none; }
-  /* line 52, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+  /* line 56, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
   button:active {
     transform: translate3d(1px, 1px, 0); }
 
-/* line 57, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+/* line 61, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
 input {
   font-size: 1em;
   padding: 1em 0.5em;
@@ -133,15 +137,15 @@ input {
   border-radius: 4px;
   outline: 1px #025176; }
 
-/* line 66, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+/* line 70, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
 li {
   list-style: none; }
 
-/* line 70, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+/* line 74, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
 .is-hidden {
   display: none; }
 
-/* line 74, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
+/* line 78, /Users/JesseMaxwell/Sites/Blitz/assets/scss/partials/_general.scss */
 .content {
   padding: 0 calc(1em + 1vw);
   width: 35rem;
