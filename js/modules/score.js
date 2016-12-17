@@ -94,6 +94,7 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
 
         this.gameEndScore.subscribe(function() {
             PubSub.publish('game.save', {});
+            PubSub.publish('game.score.change', {});
         });
 
         this.remainingPoints = ko.pureComputed(function() {
