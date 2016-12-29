@@ -1,0 +1,23 @@
+{
+    "name": "Dutch Blitz Score Board",
+    "short_name": "Blitz Score",
+    "icons": [{
+        "src": "assets/images/touch-icon-very-large.png",
+        "type": "image/png",
+        "sizes": "182x182"
+    }, {
+        "src": "assets/images/touch-icon-large.png",
+        "type": "image/png",
+        "sizes": "122x122"
+    }, {
+        "src": "assets/images/touch-icon.png",
+        "type": "image/png",
+        "sizes": "66x66"
+    }],
+    "start_url": "/?homescreen=1",
+    "scope": "/",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#fff",
+    "theme_color": "#025176"
+}

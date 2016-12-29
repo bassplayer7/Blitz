@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dutch Blitz Scores</title>
+    <title>Dutch Blitz Scoreboard | Track Dutch Blitz Scores Easily!</title>
     <meta name="viewport" content="initial-scale=1.0,width=device-width,minimum-scale=1" />
     <link rel="stylesheet" href="assets/css/prod/styles.css" />
     <link rel="icon" type="image/png" href="assets/images/site-icon.png" />
@@ -14,6 +14,7 @@
     <meta property="og:description" content="No more paper scoring! Keep track of Dutch Blitz game scores with ease. A scoreboard shows current game information and who is leading."/>
     <meta property="og:image" content="assets/images/touch-icon-very-large.png" />
     <meta property="og:url" content="https://bassplayer7.github.io/blitz/" />
+    <meta name="theme-color" content="#025176">
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="google-site-verification" content="94xYsQZduVkTW3iyIdoe__MKVzRRAW8kxH4VaVsXClE" />
 </head>
@@ -137,8 +138,8 @@
     <div class="user-help">
         <div class="user-help__actions">
             <span role="button" class="user-help__action" data-bind="click: toggleUserHelp">Tips</span>
-            <a href="http://www.dutchblitz.com/wp-content/uploads/Dutch_Blitz_Directions_Web.pdf" class="user-help__action" target="_blank">Rules (pdf)</a>
-            <a target="_blank" class="user-help__action" href="https://www.amazon.com/gp/product/B000BBU0KS/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B000BBU0KS&linkCode=as2&tag=bluegpiano-20&linkId=90f961303eef30fa6727bd1871ccfd62" onclick="ga('send', 'event', 'Link', 'Outbound', 'Amazon Affiliate');">Purchase Dutch Blitz <img src="//ir-na.amazon-adsystem.com/e/ir?t=bluegpiano-20&l=am2&o=1&a=B000BBU0KS" width="1" height="1" border="0" alt="" style="border:none !important; margin:0 !important;" /></a>
+            <a href="http://www.dutchblitz.com/wp-content/uploads/Dutch_Blitz_Directions_Web.pdf" class="user-help__action" target="_blank" rel="noopener">Rules (pdf)</a>
+            <a target="_blank" rel="noopener" class="user-help__action" href="https://www.amazon.com/gp/product/B000BBU0KS/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B000BBU0KS&linkCode=as2&tag=bluegpiano-20&linkId=90f961303eef30fa6727bd1871ccfd62" onclick="ga('send', 'event', 'Link', 'Outbound', 'Amazon Affiliate');">Purchase Dutch Blitz <img src="//ir-na.amazon-adsystem.com/e/ir?t=bluegpiano-20&l=am2&o=1&a=B000BBU0KS" width="1" height="1" border="0" alt="" style="border:none !important; margin:0 !important;" /></a>
         </div>
         <div class="user-help__content" data-bind="css: {'is-visible': tipsVisible }">
             <h4>Tips</h4>
@@ -146,7 +147,6 @@
                 <li>Tap score to change player's color. Now you can match your color with your card color.</li>
                 <li>Use the up/down arrows above your keyboard to move from score to score. It will assume it is a positive score.</li>
                 <li>Your game is always saved to your device. Go ahead and Google who invented Dutch Blitz&reg; and then pick up here where you left off.</li>
-                <li>There's no need to tap complete round every time. It takes care of it automatically.</li>
             </ul>
 
             <h4>Feature Requests</h4>
@@ -156,6 +156,9 @@
                 <li>Multi-player - hook up multiple devices to the same game so everyone can enter their own score. <span role="button" class="link js-vote" onclick="ga('send', 'event', 'User Feedback', 'Vote', 'Multi-Player');">Vote</span></li>
             </ul>
         </div>
+        
+        <p style="margin-top: 1.25em">This app makes keeping track of Dutch Blitz score incredibly easy. Simply create players above and enter scores for each one, every round. You can tap the colored box that contains their current score in order to change their color. This allows you to easily match the color displayed with the color on the back of their deck of cards.</p>
+        <p>According to the rules, 75 points are required to win. However, many players prefer a higher score. If you want to change it, simply update the number and the scoreboard will continue to track the progress of each player.</p>
     </div>
 </section>
     
