@@ -17,6 +17,7 @@
     <meta name="theme-color" content="#025176">
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="google-site-verification" content="94xYsQZduVkTW3iyIdoe__MKVzRRAW8kxH4VaVsXClE" />
+    <link rel="manifest" href="/manifest.json">
 </head>
 <body>
 <header>
@@ -58,7 +59,7 @@
                         </svg>
                     </button>
                 </label>
-                <input type="text" data-bind="textInput: name, attr: { id: elementId }, visible: editingName, hasFocus: editingName" placeholder="Add Player's Name" class="player__name-input"/>
+                <input type="text" data-bind="textInput: name, attr: { id: elementId }, visible: editingName, hasFocus: editingName" title="Player Name" placeholder="Add Player's Name" class="player__name-input"/>
             </div>
             <div class="player__score-block" data-bind="css: { 'has-empty-score': scoreInputIsEmpty() }">
                 <div class="player__score-entry">
