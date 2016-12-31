@@ -12,13 +12,13 @@ require.config({
     }
 });
 
-requirejs(['knockout', 'modules/game', 'modules/services/worker'], function(ko, Game) {
+requirejs(['knockout', 'modules/game'], function(ko, Game) {
     ko.applyBindings(new Game);
 });
 
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/js/modules/services/sw.js').then(function(registration) {
+        navigator.serviceWorker.register('/sw.js').then(function(registration) {
             console.log('ServiceWorker registration successful with scope: ', registration.scope);
         }).catch(function(err) {
             console.log('ServiceWorker registration failed: ', err);

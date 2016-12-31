@@ -1,7 +1,13 @@
 {
     "name": "Dutch Blitz Score Board",
+    "lang": "en-US",
     "short_name": "Blitz Score",
+    "description": "An incredibly simple way to track scores of Dutch Blitz games.",
     "icons": [{
+        "src": "assets/images/touch-icon-full.png",
+        "type": "image/png",
+        "sizes": "310x310"
+    }, {
         "src": "assets/images/touch-icon-very-large.png",
         "type": "image/png",
         "sizes": "182x182"
@@ -14,7 +20,7 @@
         "type": "image/png",
         "sizes": "66x66"
     }],
-    "start_url": "/?homescreen=1",
+    "start_url": ".",
     "scope": "/",
     "display": "standalone",
     "orientation": "portrait",
