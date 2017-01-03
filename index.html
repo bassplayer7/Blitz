@@ -70,8 +70,8 @@
                             <rect y="3.5" width="9" height="2"/>
                         </svg>
                     </button>
-                    <input type="tel" title="Player Score" data-bind="value: roundScore, hasFocus: scoreFocus, textInput: scoreInput, event: { focusout: $root.centerGame, focus: $root.scoreBeingEntered }" placeholder="Points" class="player__score-input"/>
-                    <button type="button" data-bind="click: updateScore" class="player__score-button player__score-button--add" title="Add Points to Score">
+                    <input type="tel" title="Player Score" data-bind="value: roundScore, textInput: scoreInput, event: { focusout: $root.centerGame, focus: $root.scoreBeingEntered }" placeholder="Points" class="player__score-input"/>
+                    <button type="button" data-bind="click: addScore" class="player__score-button player__score-button--add" title="Add Points to Score">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 9 9" class="player__score-icon">
                             <title>Add Score</title>
                             <rect x="3.5" width="2" height="9"/>
@@ -182,7 +182,7 @@
 
 <script src="https://use.typekit.net/zro0rut.js"></script>
 <script>try{Typekit.load({ async: true });}catch(e){}</script>
-<script data-main="js/build/init" src="js/lib/require.js" defer></script>
+<script data-main="js/init" src="js/lib/require.js" defer></script>
 <script src="js/build/lib/smoothscroll.js" defer></script>
 </body>
 </html>

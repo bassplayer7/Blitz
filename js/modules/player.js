@@ -61,7 +61,6 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
         self.scoreInput         = ko.observable();
         self.roundScore         = ko.observable(player.roundScore);
         self.roundScoreVisible  = ko.observable(false);
-        self.scoreFocus         = ko.observable(false);
         self.lastRecordedRound  = ko.observable(player.lastRecordedRound || 0);
 
         self.colorVariable = function() {
@@ -75,9 +74,9 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
 
         self.currentScore = ko.pureComputed({
             read: function() {
-                self.score(parseInt(self.roundScore() || 0) + parseInt(self.score()));
+                // self.score(parseInt(self.roundScore() || 0) + parseInt(self.score()));
                 self.currentRoundScore(self.roundScore());
-                self.roundScore(null);
+                // self.roundScore(null);
                 return self.score();
             },
             write: function(value) {
@@ -95,9 +94,7 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
             self.editingName(true);
         };
 
-        self.updateScore = function() {};
-
-        self.currentScore.subscribe(function() {
+        self.score.subscribe(function() {
             self.incrementRound();
             self.roundScoreVisible(true);
             PubSub.publish('score.update', self);
@@ -155,17 +152,27 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
             }, 60000); // 1m
         };
 
+        self.addScore = function() {
+            self.score(parseInt(self.roundScore() || 0) + parseInt(self.score()));
+            self.roundScore(null);
+        };
+
         /**
          * Because the roundScore is calculated when focus is removed from the input, the score actually changes before
          * this function is called. As a result, it takes the previous value of the input and works with that.
          */
         self.minusScore = function(model, event) {
+            console.log("subtracting score");
             event.currentTarget.focus();
 
             // Take the actual score, convert it to negative and double it (because it was previously added to score)
-            var actualRoundScore = (this.currentRoundScore() * -1) * 2;
+            // var actualRoundScore = (this.currentRoundScore() * -1) * 2;
+            self.roundScore(self.roundScore() * -1);
             // Update the currentScore by adjusting the roundScore
-            self.roundScore(actualRoundScore);
+            // self.roundScore(actualRoundScore);
+            self.score(parseInt(self.roundScore() || 0) + parseInt(self.score()));
+
+            self.roundScore(null);
         };
 
         PubSub.subscribe('round.complete', function () {
