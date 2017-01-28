@@ -1,6 +1,6 @@
 # Dutch Blitz - an un-official scoreboard for the game
 
-Play the game: **[bassplayer7.github.io/blitz](https://bassplayer7.github.io/blitz/)**
+Play the game: **[jessemaxwell.com](https:/jessemaxwell.com/)**
 
 ----
 
