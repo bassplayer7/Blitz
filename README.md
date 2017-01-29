@@ -1,6 +1,6 @@
 # Dutch Blitz - an un-official scoreboard for the game
 
-Play the game: **[jessemaxwell.com](https:/jessemaxwell.com/)**
+Play the game: **[jessemaxwell.com](https://jessemaxwell.com/)**
 
 ----
 
