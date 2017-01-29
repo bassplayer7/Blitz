@@ -5,7 +5,16 @@
  * @copyright Swift Otter Studios, 11/26/16
  */
 
-define(['knockout', 'pubsub', 'modules/player', 'modules/score', 'modules/persist', 'modules/round', 'modules/complete'], function(ko, PubSub, Player, Score, Persist, Round, Complete) {
+define([
+    'knockout',
+    'pubsub',
+    'hammerjs',
+    'modules/player',
+    'modules/score',
+    'modules/persist',
+    'modules/round',
+    'modules/complete'
+], function(ko, PubSub, HammerJS, Player, Score, Persist, Round, Complete) {
     return function() {
         var self = this;
 

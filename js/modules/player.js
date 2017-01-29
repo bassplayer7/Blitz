@@ -6,7 +6,8 @@
  */
 
 define(['knockout', 'pubsub'], function(ko, PubSub) {
-    var nextId = 0;
+    var nextId = 0,
+        recentScore = 0;
 
     function getPlayerId(id) {
         if (id) {
@@ -62,6 +63,7 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
         self.roundScore         = ko.observable(player.roundScore);
         self.roundScoreVisible  = ko.observable(false);
         self.lastRecordedRound  = ko.observable(player.lastRecordedRound || 0);
+        self.swipeResult        = ko.observable(false);
 
         self.colorVariable = function() {
             return `--player-color: var(--${self.color()}); --player-color-r: var(--${self.color()}-r); --player-color-g: var(--${self.color()}-g); --player-color-b: var(--${self.color()}-b)`;
@@ -74,8 +76,9 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
 
         self.currentScore = ko.pureComputed({
             read: function() {
+                // recentScore = self.roundScore();
                 // self.score(parseInt(self.roundScore() || 0) + parseInt(self.score()));
-                self.currentRoundScore(self.roundScore());
+                // self.currentRoundScore(self.roundScore());
                 // self.roundScore(null);
                 return self.score();
             },
@@ -112,11 +115,8 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
         });
 
         self.renderRoundScore = ko.pureComputed(function() {
-            if (self.currentRoundScore() > 0) {
-                return '+' + self.currentRoundScore();
-            } else {
-                return self.currentRoundScore() / 2;
-            }
+            self.roundScore();
+            return recentScore;
         });
 
         self.showRoundScore = ko.pureComputed(function(){
@@ -154,6 +154,7 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
 
         self.addScore = function() {
             self.score(parseInt(self.roundScore() || 0) + parseInt(self.score()));
+            recentScore = self.roundScore();
             self.roundScore(null);
         };
 
@@ -171,13 +172,29 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
             // Update the currentScore by adjusting the roundScore
             // self.roundScore(actualRoundScore);
             self.score(parseInt(self.roundScore() || 0) + parseInt(self.score()));
-
+            recentScore = self.roundScore();
             self.roundScore(null);
+        };
+
+        const RIGHT_SWIPE = 1,
+              LEFT_SWIPE = 2;
+
+        self.swipeGesture = function(model, event) {
+            if (event.direction === LEFT_SWIPE && self.swipeResult() !== 'left') {
+                self.swipeResult('left');
+            } else {
+                self.swipeResult(false);
+            }
+
+            if (event.direction === RIGHT_SWIPE && self.swipeResult() === 'left') {
+                self.swipeResult(false);
+            }
+
+            event.preventDefault();
         };
 
         PubSub.subscribe('round.complete', function () {
             canUpdateRound = true;
-            // console.log("Can update Round");
         })
     }
 });

@@ -1,15 +1,24 @@
 .player {
   & {
     position: relative;
-    border-left: 4px solid var(--player-color);
     margin: 0 calc((1em + 1vw) * -1) 0.5em;
+    overflow: hidden;
+  }
+
+  &__primary-content {
+    position: relative;
+    border-left: 4px solid var(--player-color);
     padding: 0.5em calc(1em + 1vw);
+    z-index: 10;
     background-color: #{'rgba(var(--player-color-r), var(--player-color-g), var(--player-color-b), 0.08)'};
+    transition: transform 200ms ease-out;
   }
 
   &--highest {
-    border-left-width: 10px;
-    padding-left: calc(1em + 1vw - 6px);
+    .player__primary-content {
+      border-left-width: 10px;
+      padding-left: calc(1em + 1vw - 6px);
+    }
 
     .player__name-text {
       font-weight: $font-bold;
@@ -32,6 +41,13 @@
 
     .player__status-note--tied {
       display: inline-block;
+    }
+  }
+
+  &--move-left {
+    .player__primary-content,
+    .player__delete {
+      transform: translateX(-3.4rem);
     }
   }
 
@@ -66,16 +82,20 @@
   }
 
   &__delete {
-    width: 1.4rem;
-    height: 1.4rem;
+    width: 3rem;
     font-size: 1rem;
     padding: 0;
-    border-radius: 100%;
     border: none;
     background-color: lighten($light-gray, 4);
     display: inline-block;
     vertical-align: middle;
     margin-left: 0.4em;
+    z-index: 0;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    bottom: 0;
+    transition: transform 200ms ease-out;
   }
 
   &__delete-icon {

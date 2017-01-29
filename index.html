@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Dutch Blitz Scoreboard | Track Dutch Blitz Scores Easily!</title>
     <meta name="viewport" content="initial-scale=1.0,width=device-width,minimum-scale=1" />
-    <link rel="stylesheet" href="assets/css/prod/styles.css" />
+    <link rel="stylesheet" href="assets/css/dev/styles.css" />
     <link rel="icon" type="image/png" href="assets/images/site-icon.png" />
     <link rel="apple-touch-icon" href="assets/images/touch-icon.png">
     <link rel="apple-touch-icon" sizes="120x120" href="assets/images/touch-icon-large.png">
@@ -44,46 +44,48 @@
 </div>
 
 <section class="content">
-    <ul class="game" data-bind="foreach: players">
-        <li class="game__player player" data-bind="css: { 'player--highest': leadScore, 'player--tied': tiedScore }, attr: { style: colorVariable() }">
-            <div class="player__color"></div>
-            <div class="player__name">
-                <label data-bind="attr: { for: elementId }, visible: !editingName(), click: editName" class="player__name-group">
-                    <span data-bind="text: name" class="player__name-text"></span>
-                    <span class="player__status-note player__status-note--leading">(leading)</span>
-                    <span class="player__status-note player__status-note--tied">(tied)</span>
-                    <button type="button" data-bind="click: $root.removePlayer, visible: !editingName()" class="player__delete">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 21 21" class="player__delete-icon">
-                            <title>close</title>
-                            <path d="M2.37,18.63,18.63,2.37M19,19,2,2" style="stroke-linecap: square; stroke-width: 5px;"/>
-                        </svg>
-                    </button>
-                </label>
-                <input type="text" data-bind="textInput: name, attr: { id: elementId }, visible: editingName, hasFocus: editingName" title="Player Name" placeholder="Add Player's Name" class="player__name-input"/>
-            </div>
-            <div class="player__score-block" data-bind="css: { 'has-empty-score': scoreInputIsEmpty() }">
-                <div class="player__score-entry">
-                    <!-- click: minusScore, -->
-                    <button type="button" data-bind="event: { mouseup: minusScore, touchstart: minusScore }" class="player__score-button player__score-button--minus" title="Subtract points from score">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 9 9" class="player__score-icon">
-                            <title>Subtract Score</title>
-                            <rect y="3.5" width="9" height="2"/>
-                        </svg>
-                    </button>
-                    <input type="tel" title="Player Score" data-bind="value: roundScore, textInput: scoreInput, event: { focusout: $root.centerGame, focus: $root.scoreBeingEntered }" placeholder="Points" class="player__score-input"/>
-                    <button type="button" data-bind="click: addScore" class="player__score-button player__score-button--add" title="Add Points to Score">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 9 9" class="player__score-icon">
-                            <title>Add Score</title>
-                            <rect x="3.5" width="2" height="9"/>
-                            <rect y="3.5" width="9" height="2"/>
-                        </svg>
-                    </button>
+    <ul class="game js-game-players" data-bind="foreach: players">
+        <li class="game__player player" data-bind="swipe: swipeGesture, css: { 'player--highest': leadScore, 'player--tied': tiedScore, 'player--move-left': swipeResult() == 'left' }, attr: { style: colorVariable() }">
+            <div class="player__primary-content">
+                <div class="player__color"></div>
+                <div class="player__name">
+                    <label data-bind="attr: { for: elementId }, visible: !editingName(), click: editName" class="player__name-group">
+                        <span data-bind="text: name" class="player__name-text"></span>
+                        <span class="player__status-note player__status-note--leading">(leading)</span>
+                        <span class="player__status-note player__status-note--tied">(tied)</span>
+                    </label>
+                    <input type="text" data-bind="textInput: name, attr: { id: elementId }, visible: editingName, hasFocus: editingName" title="Player Name" placeholder="Add Player's Name" class="player__name-input"/>
                 </div>
-                <div class="player__score" data-bind="click: changeColor">
-                    <div data-bind="text: renderRoundScore, css: { 'is-active': showRoundScore }" class="player__round-score"></div>
-                    <div data-bind="text: currentScore" class="player__full-score"></div>
+                <div class="player__score-block" data-bind="css: { 'has-empty-score': scoreInputIsEmpty() }">
+                    <div class="player__score-entry">
+                        <!-- click: minusScore, -->
+                        <button type="button" data-bind="event: { mouseup: minusScore, touchstart: minusScore }" class="player__score-button player__score-button--minus" title="Subtract points from score">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 9 9" class="player__score-icon">
+                                <title>Subtract Score</title>
+                                <rect y="3.5" width="9" height="2"/>
+                            </svg>
+                        </button>
+                        <input type="tel" title="Player Score" data-bind="value: roundScore, textInput: scoreInput, event: { focusout: $root.centerGame, focus: $root.scoreBeingEntered }" placeholder="Points" class="player__score-input"/>
+                        <button type="button" data-bind="click: addScore" class="player__score-button player__score-button--add" title="Add Points to Score">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 9 9" class="player__score-icon">
+                                <title>Add Score</title>
+                                <rect x="3.5" width="2" height="9"/>
+                                <rect y="3.5" width="9" height="2"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <div class="player__score" data-bind="click: changeColor">
+                        <div data-bind="text: renderRoundScore, css: { 'is-active': showRoundScore }" class="player__round-score"></div>
+                        <div data-bind="text: currentScore" class="player__full-score"></div>
+                    </div>
                 </div>
             </div>
+            <button type="button" data-bind="click: $root.removePlayer" class="player__delete">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 21 21" class="player__delete-icon">
+                    <title>close</title>
+                    <path d="M2.37,18.63,18.63,2.37M19,19,2,2" style="stroke-linecap: square; stroke-width: 5px;"/>
+                </svg>
+            </button>
         </li>
     </ul>
 
