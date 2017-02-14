@@ -38,7 +38,7 @@
             wrapper: function (element, touchEventName, handler, bindings) {
                 var extendedOptions = this.setMoreOptions(bindings);
 
-                Hammer(element, extendedOptions).on(touchEventName, handler);
+                Hammer(element, {threshold: 1, pointers: 0}).on(touchEventName, handler);
             }
         };
 
@@ -60,7 +60,8 @@
         };
 
         knockouch.init = function () {
-            knockouch.touchEvents.forEach(event => knockouch.makeTouchHandlerShortcut(knockouch.touchEvents[event]));
+            console.log("Hello!");
+            knockouch.touchEvents.forEach(event => knockouch.makeTouchHandlerShortcut(event));
         };
 
         //Setting one of the predefined libraries as selected touch library.
