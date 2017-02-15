@@ -10,6 +10,9 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
 
     return function (game) {
         var self = this;
+
+        this.game = game;
+
         var defaultPartial = function() {
             return {
                 players: [],
@@ -27,13 +30,16 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
             self.rounds.push(self.partialRound);
             self.partialRound = defaultPartial();
 
+            console.log(self.rounds());
+
             PubSub.publish('round.complete', self.rounds().length + 1);
         }
 
         function roundInfoFrom(player) {
             return {
                 id: player.id,
-                round: player.lastRecordedRound()
+                round: player.lastRecordedRound(),
+                score: player.score()
             }
         }
 
@@ -69,6 +75,7 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
             }
 
             self.partialRound.players.push(roundInfoFrom(player));
+            console.log(self.partialRound);
 
             self.partialRound.players.forEach(playerRound => {
                 if (playerRound.round >= self.partialRound.topRound) {

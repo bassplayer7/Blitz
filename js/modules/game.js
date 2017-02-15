@@ -13,8 +13,9 @@ define([
     'modules/score',
     'modules/persist',
     'modules/round',
-    'modules/complete'
-], function(ko, PubSub, HammerJS, Player, Score, Persist, Round, Complete) {
+    'modules/complete',
+    'modules/undo'
+], function(ko, PubSub, HammerJS, Player, Score, Persist, Round, Complete, Undo) {
     return function() {
         var self = this;
 
@@ -24,6 +25,7 @@ define([
         this.score = new Score(self);
         this.round = new Round(self);
         this.complete = new Complete(self);
+        this.undo = new Undo(self);
         this.entryInProgress = true;
 
         this.addPlayer = function() {
@@ -36,6 +38,10 @@ define([
             } else if (confirm("Are you sure you want to delete this player?")) {
                 self.players.remove(player);
             }
+        };
+
+        this.undoLastScore = function() {
+            self.undo.execute(self.players());
         };
 
         this.clearGame = function() {

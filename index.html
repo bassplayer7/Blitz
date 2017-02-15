@@ -97,6 +97,7 @@
         -->
 
         <div class="secondary-action__item">
+            <button type="button" data-bind="click: undoLastScore, visible: !gameFirstView()" class="add-game-player">Undo</button>
             <button type="button" data-bind="click: addPlayer, visible: !gameFirstView()" class="add-game-player">
                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 9 9" class="add-game-player__icon">
                     <title>Add Score</title>
