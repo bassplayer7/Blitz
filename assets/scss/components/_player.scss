@@ -31,8 +31,10 @@
   }
 
   &--tied {
-    border-left-width: 10px;
-    padding-left: calc(1em + 1vw - 6px);
+    .player__primary-content {
+      border-left-width: 10px;
+      padding-left: calc(1em + 1vw - 6px);
+    }
 
     .player__name-text {
       font-weight: $font-bold;
@@ -144,6 +146,14 @@
       border-radius: 0 4px 4px 0;
       border-left: 1px;
     }
+  }
+
+  &__color {
+    width: 1em;
+    height: 1.4em;
+    border-radius: 2px;
+    background-color: $mid-gray;
+    background-color: var(--player-color);
   }
 
   &__score-icon {

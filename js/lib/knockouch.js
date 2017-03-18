@@ -60,7 +60,6 @@
         };
 
         knockouch.init = function () {
-            console.log("Hello!");
             knockouch.touchEvents.forEach(event => knockouch.makeTouchHandlerShortcut(event));
         };
 

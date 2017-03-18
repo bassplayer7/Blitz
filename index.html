@@ -47,7 +47,6 @@
     <ul class="game js-game-players" data-bind="foreach: players">
         <li class="game__player player" data-bind="swipe: swipeGesture, css: { 'player--highest': leadScore, 'player--tied': tiedScore, 'player--move-left': swipeResult() == 'left' }, attr: { style: colorVariable() }">
             <div class="player__primary-content">
-                <div class="player__color"></div>
                 <div class="player__name">
                     <label data-bind="attr: { for: elementId }, visible: !editingName(), click: editName" class="player__name-group">
                         <span data-bind="text: name" class="player__name-text"></span>
@@ -74,9 +73,28 @@
                             </svg>
                         </button>
                     </div>
-                    <div class="player__score" data-bind="click: changeColor">
+
+                    <div class="player__color" data-bind="click: changeColor"></div>
+
+                    <div class="player__score" data-bind="click: toggleAllScoreVisibility">
                         <div data-bind="text: renderRoundScore, css: { 'is-active': showRoundScore }" class="player__round-score"></div>
                         <div data-bind="text: currentScore" class="player__full-score"></div>
+                    </div>
+                </div>
+
+                <div class="score-list" data-bind="visible: allScoresVisible">
+                    <div class="score-list__title">Scores:</div>
+                    <div class="score-list__table">
+                        <div class="score-list__item">
+                            <strong class="score-list__value">Round</strong>
+                            <strong class="score-list__value">Total</strong>
+                        </div>
+                        <ul data-bind="foreach: allScores">
+                            <li class="score-list__item">
+                                <span data-bind="text: round" class="score-list__value score-list__value--round"></span>
+                                <span data-bind="text: total" class="score-list__value score-list__value--total"></span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -89,13 +107,11 @@
         </li>
     </ul>
 
-    <div class="secondary-action">
-        <!--
-        <div data-bind="with: round" class="secondary-action__item">
-            <button type="button" data-bind="click: roundCompleteAction, visible: canMarkRoundAsComplete()" class="round-action--complete">Finish Game</button>
-        </div>
-        -->
+    <div data-bind="with: round" class="complete-game">
+        <button type="button" data-bind="click: forceCompleteGame, visible: canCompleteGame()" class="complete-game__button">Finish Game</button>
+    </div>
 
+    <div class="secondary-action">
         <div class="secondary-action__item">
             <button type="button" data-bind="click: undoLastScore, visible: !gameFirstView()" class="add-game-player">Undo</button>
             <button type="button" data-bind="click: addPlayer, visible: !gameFirstView()" class="add-game-player">
@@ -185,7 +201,7 @@
 
 <script src="https://use.typekit.net/zro0rut.js"></script>
 <script>try{Typekit.load({ async: true });}catch(e){}</script>
-<script data-main="js/init" src="js/lib/require.js" defer></script>
+<script data-main="js/build/init" src="js/lib/require.js" defer></script>
 <script src="js/build/lib/smoothscroll.js" defer></script>
 </body>
 </html>

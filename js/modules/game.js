@@ -41,7 +41,7 @@ define([
         };
 
         this.undoLastScore = function() {
-            self.undo.execute(self.players());
+            self.undo.execute();
         };
 
         this.clearGame = function() {

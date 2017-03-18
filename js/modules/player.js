@@ -7,7 +7,8 @@
 
 define(['knockout', 'pubsub'], function(ko, PubSub) {
     var nextId = 0,
-        recentScore = 0;
+        recentScore = 0,
+        subscribersActive = true;
 
     function getPlayerId(id) {
         if (id) {
@@ -63,6 +64,8 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
         self.roundScore         = ko.observable(player.roundScore);
         self.roundScoreVisible  = ko.observable(false);
         self.lastRecordedRound  = ko.observable(player.lastRecordedRound || 0);
+        self.allScores          = ko.observableArray(player.allScores || []);
+        self.allScoresVisible   = ko.observable(false);
         self.swipeResult        = ko.observable(false);
 
         self.colorVariable = function() {
@@ -75,34 +78,37 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
         };
 
         self.currentScore = ko.pureComputed({
-            read: function() {
-                // recentScore = self.roundScore();
-                // self.score(parseInt(self.roundScore() || 0) + parseInt(self.score()));
-                // self.currentRoundScore(self.roundScore());
-                // self.roundScore(null);
-                return self.score();
-            },
-            write: function(value) {
-                console.log("updating score");
-                self.score(value);
-            }
+            read: () => self.score(),
+            write: value => self.score(value)
         });
 
         self.elementId = function() {
             return 'player_' + self.id;
         };
 
-        self.editingName = ko.observable(self.name() && self.name().length > 0 ? false : true);
+        self.editingName = ko.observable(!(self.name() && self.name().length > 0));
         self.editName = function() {
             self.editingName(true);
         };
 
         self.score.subscribe(function() {
-            self.incrementRound();
-            self.roundScoreVisible(true);
-            PubSub.publish('score.update', self);
-            PubSub.publish('game.save', {});
+            if (subscribersActive) {
+                self.incrementRound();
+                self.roundScoreVisible(true);
+                self.allScores.push({
+                    total: self.score(),
+                    round: self.roundScore()
+                });
+                PubSub.publish('score.update', self);
+                PubSub.publish('game.save', {});
+            }
         });
+
+        self.silentScoreUpdate = function(value) {
+            subscribersActive = false;
+            self.score(value);
+            subscribersActive = true;
+        };
 
         self.editingName.subscribe(function() {
             if (!self.editingName() && (!self.name() || self.name().length < 1)) {
@@ -116,8 +122,19 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
 
         self.renderRoundScore = ko.pureComputed(function() {
             self.roundScore();
+
+            if (recentScore > 0) {
+                return `+${recentScore}`;
+            }
+
             return recentScore;
         });
+
+        self.toggleAllScoreVisibility = function() {
+            if (self.allScores().length > 0) {
+                self.allScoresVisible(!self.allScoresVisible());
+            }
+        };
 
         self.showRoundScore = ko.pureComputed(function(){
             self.currentScore();
@@ -158,19 +175,10 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
             self.roundScore(null);
         };
 
-        /**
-         * Because the roundScore is calculated when focus is removed from the input, the score actually changes before
-         * this function is called. As a result, it takes the previous value of the input and works with that.
-         */
         self.minusScore = function(model, event) {
-            console.log("subtracting score");
             event.currentTarget.focus();
 
-            // Take the actual score, convert it to negative and double it (because it was previously added to score)
-            // var actualRoundScore = (this.currentRoundScore() * -1) * 2;
             self.roundScore(self.roundScore() * -1);
-            // Update the currentScore by adjusting the roundScore
-            // self.roundScore(actualRoundScore);
             self.score(parseInt(self.roundScore() || 0) + parseInt(self.score()));
             recentScore = self.roundScore();
             self.roundScore(null);
@@ -193,8 +201,16 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
             event.preventDefault();
         };
 
+        self.resetScores = function() {
+            self.allScores([]);
+            self.allScoresVisible(false);
+        };
+
         PubSub.subscribe('round.complete', function () {
             canUpdateRound = true;
-        })
+        });
+
+        PubSub.subscribe('game.reset', this.resetScores);
+        PubSub.subscribe('game.clear', this.resetScores);
     }
 });

@@ -1,54 +1,59 @@
 /**
+ * Created by jessemaxwell on 3/18/17.
+ */
+
+/**
  * Created by bassplayer7 on 2/14/17.
  */
 
-define(['knockout'], function() {
+define(['knockout', 'pubsub'], function(ko, PubSub) {
     return function(game) {
         var self = this;
 
         this.game = game;
-        this.round = game.round;
+        this.plays = ko.observableArray([]);
 
-        this.execute = function(players) {
-            var playerId = self.getLastPlayerId();
+        this.execute = function() {
+            let lastId = self.plays.pop();
 
-            var player = players.find(player => player.id === playerId);
+            let player = ko.utils.arrayFirst(this.game.players(), function(item) {
+                return lastId === item.id;
+            });
 
-            // need to get incrementally move beyond just the last player's score
-            // need to fix the slide over number when undoing a score
-            player.score(player.score() + (self.getLastScoreFor(player) * -1));
-            console.log(player);
-        };
+            if (!player) {
+                return false;
+            }
 
-        this.getLastPlayer = function() {
-            console.log(self.game.players());
+            let score = player.score();
+
+            player.silentScoreUpdate(score + (self.getLastScoreFor(player) * -1));
         };
 
         this.getLastScoreFor = function (player) {
-            var round = self.getRecentPlayers().reverse().find(round => round.id === player.id);
-            return parseInt(round.score);
-        };
+            let lastScore = player.allScores.pop();
 
-        this.getLastPlayerId = function() {
-            var playerArray = self.getRecentPlayers(),
-                player = playerArray[playerArray.length - 1];
-
-            if (player && player.id) {
-                return player.id;
+            if (lastScore) {
+                return parseInt(lastScore.round);
             }
 
-            return false;
+            return 0;
         };
 
-        this.getRecentPlayers = function () {
-            var rounds = this.round.rounds(),
-                partial = this.round.partialRound;
+        this.resetPlays = function () {
+            self.plays.removeAll();
+        };
 
-            if (partial && partial.players.length > 0) {
-                return partial.players;
+        PubSub.subscribe('score.update', function (event, data) {
+            self.plays.push(data.id);
+        });
+
+        PubSub.subscribe('perist.load', function(name, loadedGame) {
+            if (loadedGame.hasOwnProperty('undo')) {
+                self.plays(loadedGame.undo);
             }
+        });
 
-            return rounds[rounds.length - 1].players;
-        }
+        PubSub.subscribe('game.reset', this.resetPlays);
+        PubSub.subscribe('game.clear', this.resetPlays);
     }
 });
