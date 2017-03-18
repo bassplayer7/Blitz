@@ -205,11 +205,10 @@ footer {
 .game-action__item {
   border: 0;
   background-color: #f4511e;
-  background-color: #1e88e5;
   color: #fff;
   width: 48%; }
 
-/* line 20, /Users/jessemaxwell/Sites/Blitz/assets/scss/components/_game.scss */
+/* line 19, /Users/jessemaxwell/Sites/Blitz/assets/scss/components/_game.scss */
 .complete-game__button {
   width: 100%;
   background-color: #43a047;
@@ -219,7 +218,7 @@ footer {
   margin-top: 1em;
   animation: finishGame 1000ms ease-out infinite; }
 
-/* line 32, /Users/jessemaxwell/Sites/Blitz/assets/scss/components/_game.scss */
+/* line 31, /Users/jessemaxwell/Sites/Blitz/assets/scss/components/_game.scss */
 .secondary-action {
   display: flex;
   justify-content: flex-end;
@@ -227,15 +226,15 @@ footer {
   width: 100%;
   clear: both; }
 
-/* line 40, /Users/jessemaxwell/Sites/Blitz/assets/scss/components/_game.scss */
+/* line 39, /Users/jessemaxwell/Sites/Blitz/assets/scss/components/_game.scss */
 .secondary-action__item + .secondary-action__item {
   margin-left: 1em; }
 
-/* line 45, /Users/jessemaxwell/Sites/Blitz/assets/scss/components/_game.scss */
+/* line 44, /Users/jessemaxwell/Sites/Blitz/assets/scss/components/_game.scss */
 .reset-game {
   background-color: #43a047; }
 
-/* line 50, /Users/jessemaxwell/Sites/Blitz/assets/scss/components/_game.scss */
+/* line 49, /Users/jessemaxwell/Sites/Blitz/assets/scss/components/_game.scss */
 .add-game-player__icon {
   margin-right: 0.5em;
   fill: #505050; }
