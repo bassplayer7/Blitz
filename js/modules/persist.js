@@ -20,6 +20,7 @@ define(['knockout', 'pubsub', 'modules/player'], function(ko, PubSub, Player) {
             dataObj.players = game.players();
             dataObj.score = game.score.gameEndScore();
             dataObj.rounds = game.round.rounds();
+            dataObj.undo = game.undo.plays();
 
             localStorage.setItem(storageKey, ko.toJSON(dataObj));
         };

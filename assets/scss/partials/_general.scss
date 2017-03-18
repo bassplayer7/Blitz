@@ -67,6 +67,10 @@ input {
   outline: 1px $blue;
 }
 
+strong {
+  font-weight: $font-bold;
+}
+
 li {
   list-style: none;
 }

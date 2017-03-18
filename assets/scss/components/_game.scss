@@ -15,6 +15,18 @@
   }
 }
 
+.complete-game {
+  &__button {
+    width: 100%;
+    background-color: $green;
+    border-color: $green;
+    color: $white;
+    font-weight: $font-default;
+    margin-top: 1em;
+    animation: finishGame 1000ms ease-out infinite;
+  }
+}
+
 .secondary-action {
   & {
     display: flex;
@@ -22,6 +34,10 @@
     padding-top: calc(1em + 3vh);
     width: 100%;
     clear: both;
+  }
+
+  &__item + &__item {
+    margin-left: 1em;
   }
 }
 
@@ -36,9 +52,16 @@
   }
 }
 
-.round-action--complete {
-  border-color: $offset-background;
-  color: #565656;
-  font-weight: $font-default;
-  opacity: 0.8;
+@keyframes finishGame {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+
+  100% {
+    opacity: 1;
+  }
 }

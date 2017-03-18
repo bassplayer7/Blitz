@@ -10,6 +10,9 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
 
     return function (game) {
         var self = this;
+
+        this.game = game;
+
         var defaultPartial = function() {
             return {
                 players: [],
@@ -33,7 +36,8 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
         function roundInfoFrom(player) {
             return {
                 id: player.id,
-                round: player.lastRecordedRound()
+                round: player.lastRecordedRound(),
+                score: player.score()
             }
         }
 
@@ -69,6 +73,7 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
             }
 
             self.partialRound.players.push(roundInfoFrom(player));
+            // console.log(self.partialRound);
 
             self.partialRound.players.forEach(playerRound => {
                 if (playerRound.round >= self.partialRound.topRound) {
@@ -97,13 +102,13 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
             return self.partialRound.playersOnCurrentRound === true;
         };
 
-        this.roundCompleteAction = function() {
+        this.forceCompleteGame = function() {
             finishPreviousRoundAndCreateNew()
         };
 
-        this.canMarkRoundAsComplete = ko.pureComputed(function() {
+        this.canCompleteGame = ko.pureComputed(function() {
             self.notifier();
-            return !self.partialRound.playersOnCurrentRound && game.score.topScore();
+            return game.score.topScore() > game.score.gameEndScore();
         });
 
         this.resetRounds = function() {

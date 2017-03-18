@@ -9,11 +9,14 @@ require.config({
     paths: {
         knockout: './lib/knockout-3.4.1',
         pubsub: './lib/pubsub.min',
+        hammerjs: './lib/hammer.min',
+        koTouch: './lib/knockouch'
     }
 });
 
-requirejs(['knockout', 'modules/game'], function(ko, Game) {
+requirejs(['knockout', 'modules/game', 'koTouch'], function(ko, Game, KnockoutTouch) {
     ko.applyBindings(new Game);
+    KnockoutTouch(ko);
 });
 
 if ('serviceWorker' in navigator) {
