@@ -1,0 +1,26 @@
+.score-list {
+  margin-top: 2em;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  &__title {
+    font-size: 1.4em;
+    opacity: 0.7;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    max-width: 10rem;
+  }
+
+  &__value {
+    text-align: center;
+    min-width: 3em;
+  }
+
+  &__value + &__value {
+    margin-left: 2em;
+  }
+}

@@ -1,0 +1,88 @@
+html {
+  touch-action: manipulation;
+}
+
+html, body {
+  min-height: 100vh;
+}
+
+body {
+  font: 16px/1.5 $font-family-sans;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: $dark-gray;
+}
+
+h1, h2 {
+  font-family: $font-family-serif;
+  letter-spacing: 1.5px;
+  font-size: 2.2rem;
+}
+
+p {
+  margin-bottom: 1.25em;
+}
+
+b {
+  font-weight: $font-bold;
+}
+
+a, .link {
+  color: $blue;
+  text-decoration: none;
+  border-bottom: 2px solid transparent;
+
+  &:hover {
+    border-bottom-color: $blue;
+    background-color: rgba($blue, 0.1);
+  }
+}
+
+h4 {
+  font-size: 1.4em;
+  margin-bottom: 1rem;
+}
+
+button {
+  padding: 1em;
+  border-radius: 4px;
+  background-color: $offset-background;
+  border: 1px solid $mid-gray;
+  font-weight: $font-bold;
+  font-size: 1em;
+  outline: none;
+
+  &:active {
+    transform: translate3d(1px, 1px, 0);
+  }
+}
+
+input {
+  font-size: 1em;
+  padding: 1em 0.5em;
+  border: 1px solid $light-gray;
+  display: inline-block;
+  border-radius: 4px;
+  outline: 1px $blue;
+}
+
+strong {
+  font-weight: $font-bold;
+}
+
+li {
+  list-style: none;
+}
+
+.is-hidden {
+  display: none;
+}
+
+.content {
+  padding: 0 calc(1em + 1vw);
+  width: 35rem;
+  max-width: 100vw;
+  margin: 0 auto;
+  flex-grow: 1;
+}

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="assets/css/dev/styles.css" />
+    <meta charset="UTF-8">
+    <title>Vue Blitz</title>
+</head>
+<body>
+<section class="content">
+    <div id="blitz">
+        <ul class="game">
+            <game-player v-for="player in players" v-bind:player="player"></game-player>
+        </ul>
+    </div>
+</section>
+
+<script src="https://unpkg.com/vue"></script>
+<script>
+    Vue.component('game-player', {
+        props: ['player'],
+        template: '<li>{{ player.name }}</li>'
+    });
+
+    var app = new Vue({
+        el: '#blitz',
+        data: {
+            players: [
+                { name: 'Jesse' },
+                { name: 'Bob' }
+            ]
+        }
+    });
+</script>
+</body>
+</html>

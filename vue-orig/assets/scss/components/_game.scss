@@ -1,0 +1,67 @@
+.game-action {
+  & {
+    display: flex;
+    justify-content: space-between;
+    padding-top: calc(1em + 3vh);
+    width: 100%;
+    clear: both;
+  }
+
+  &__item {
+    border: 0;
+    background-color: $orange;
+    color: $white;
+    width: 48%;
+  }
+}
+
+.complete-game {
+  &__button {
+    width: 100%;
+    background-color: $green;
+    border-color: $green;
+    color: $white;
+    font-weight: $font-default;
+    margin-top: 1em;
+    animation: finishGame 1000ms ease-out infinite;
+  }
+}
+
+.secondary-action {
+  & {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: calc(1em + 3vh);
+    width: 100%;
+    clear: both;
+  }
+
+  &__item + &__item {
+    margin-left: 1em;
+  }
+}
+
+.reset-game {
+  background-color: $green;
+}
+
+.add-game-player {
+  &__icon {
+    margin-right: 0.5em;
+    fill: $dark-gray;
+  }
+}
+
+@keyframes finishGame {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
