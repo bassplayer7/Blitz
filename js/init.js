@@ -22,6 +22,7 @@ requirejs(['knockout', 'modules/game', 'koTouch'], function(ko, Game, KnockoutTo
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', function() {
         navigator.serviceWorker.register('/sw.js').then(function(registration) {
+            registration.update();
         }).catch(function(err) {
             console.log('ServiceWorker registration failed: ', err);
         });
