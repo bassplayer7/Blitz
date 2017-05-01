@@ -1,20 +1,24 @@
-var CACHE_NAME = 'blitz-cache-v1';
+var CACHE_NAME = 'blitz-cache-v1.1';
 
 let moduleUrl = 'build/';
 
 const urlsToCache = [
     '/',
     '/assets/css/prod/styles.css',
+    '/js/lib/require.js',
+    '/manifest.json',
     '/js/' + moduleUrl + 'init.js',
-    '/js/' + moduleUrl + 'lib/require.js',
     '/js/' + moduleUrl + 'lib/knockout-3.4.1.js',
     '/js/' + moduleUrl + 'lib/pubsub.min.js',
+    '/js/' + moduleUrl + 'lib/hammer.min.js',
+    '/js/' + moduleUrl + 'lib/knockouch.js',
     '/js/' + moduleUrl + 'modules/game.js',
     '/js/' + moduleUrl + 'modules/complete.js',
     '/js/' + moduleUrl + 'modules/persist.js',
     '/js/' + moduleUrl + 'modules/player.js',
     '/js/' + moduleUrl + 'modules/round.js',
-    '/js/' + moduleUrl + 'modules/score.js'
+    '/js/' + moduleUrl + 'modules/score.js',
+    '/js/' + moduleUrl + 'modules/undo.js'
 ];
 
 const urlsToIgnore = [

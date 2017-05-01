@@ -170,7 +170,7 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
         };
 
         self.addScore = function() {
-            self.score(parseInt(self.roundScore() || 0) + parseInt(self.score()));
+            self.score((parseInt(self.roundScore()) || 0) + self.score());
             recentScore = self.roundScore();
             self.roundScore(null);
         };
@@ -178,8 +178,8 @@ define(['knockout', 'pubsub'], function(ko, PubSub) {
         self.minusScore = function(model, event) {
             event.currentTarget.focus();
 
-            self.roundScore(self.roundScore() * -1);
-            self.score(parseInt(self.roundScore() || 0) + parseInt(self.score()));
+            self.roundScore((parseInt(self.roundScore()) || 0) * -1);
+            self.score((parseInt(self.roundScore()) || 0) + self.score());
             recentScore = self.roundScore();
             self.roundScore(null);
         };
