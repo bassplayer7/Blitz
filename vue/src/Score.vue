@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import Player from './Components/Player.vue';
+  import Player from './Score/Player.vue';
 
 export default {
   data () {

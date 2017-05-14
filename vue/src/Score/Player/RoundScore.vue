@@ -48,7 +48,7 @@
                 this.activeLabel = !this.activeLabel;
             },
 
-            replaceLabal() {
+            replaceLabel() {
                 this.activeLabel = !this.activeLabel;
             }
         }
