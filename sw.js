@@ -1,4 +1,5 @@
-var CACHE_NAME = 'blitz-cache-v1.1';
+// Cache v2
+var CACHE_NAME = 'cache-v2.0.0';
 
 let moduleUrl = 'build/';
 
@@ -28,6 +29,14 @@ const urlsToIgnore = [
     'amazon-adsystem.com'
 ];
 
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.getRegistrations().then(function(registrations) {
+        for(let registration of registrations) {
+            registration.update();
+        } 
+    })
+}
+
 self.addEventListener('install', function(event) {
     event.waitUntil(
         caches.open(CACHE_NAME)
@@ -40,7 +49,7 @@ self.addEventListener('install', function(event) {
 self.addEventListener('fetch', function(event) {
     event.respondWith(
         caches.match(event.request).then(function(response) {
-            return response || fetch(event.request);
+            return fetch(event.request) || response;
         })
     );
 });
