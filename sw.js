@@ -1,5 +1,5 @@
-// Cache v2
-var CACHE_NAME = 'cache-v2.0.0';
+// Cache v2.0.1
+var CACHE_NAME = 'cache-v2.0.1';
 
 let moduleUrl = 'build/';
 
