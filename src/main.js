@@ -19,11 +19,12 @@ new Vue({
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js').then(registration => {
-      debugger;
-      console.log('SW registered: ', registration);
-    }).catch(registrationError => {
+    navigator.serviceWorker.register('/sw.js').catch(registrationError => {
       console.log('SW registration failed: ', registrationError);
     });
   });
 }
+
+// Always copy/paste the following into sw.js
+// const cacheFirst = workboxSW.strategies.cacheFirst({cacheName: 'googleapis'});
+//workboxSW.router.registerRoute(new RegExp('https://fonts.(?:googleapis|gstatic).com/(.*)'), cacheFirst);

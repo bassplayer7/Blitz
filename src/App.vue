@@ -14,7 +14,7 @@ export default {
 <style src="@/styles/global.scss" lang="scss"></style>
 
 <style>
-  @import url(https://fonts.googleapis.com/css?family=Teko);
+  @import url(https://fonts.googleapis.com/css?family=Teko|Merriweather);
 
   body, html {
     height: 100%;

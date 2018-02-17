@@ -1,30 +1,43 @@
 <template>
-  <div class="home">
-    <h1>Jesse Maxwell</h1>
-    <a href="/score/" class="card score">
-      <medal-icon class="icon"/>
-      <div class="label">Card Game Scores</div>
-      <p>The convenient way to count score.</p>
-    </a>
-    <router-link :to="{ name: 'lift' }" class="card lift">
-      <lift-icon class="icon"/>
-      <div class="label">Weight Lifting Timer</div>
-      <p>Easily track breaks.</p>
-    </router-link>
+  <div>
+    <div class="home">
+      <h1>Jesse Maxwell</h1>
+      <a href="/score/" class="card score">
+        <medal-icon class="icon"/>
+        <div class="label">Card Game Scores</div>
+        <p>The convenient way to count score.</p>
+      </a>
+      <router-link :to="{ name: 'lift' }" class="card lift">
+        <lift-icon class="icon"/>
+        <div class="label">Weight Lifting Timer</div>
+        <p>Easily track breaks.</p>
+      </router-link>
+    </div>
+    <welcome-text/>
+    <footer>
+      &copy; Copyright {{ year }} Jesse Maxwell
+    </footer>
   </div>
 </template>
 
 <script>
   import LiftIcon from '@/assets/icons/lift.svg';
   import MedalIcon from '@/assets/icons/medal.svg';
+  import WelcomeText from "./WelcomeText";
   export default {
     name: 'home',
     components: {
+      WelcomeText,
       LiftIcon,
       MedalIcon
     },
     data() {
       return {}
+    },
+    computed: {
+      year() {
+        return (new Date()).getFullYear()
+      },
     }
   }
 </script>
@@ -46,7 +59,8 @@
     align-items: center;
     justify-content: center;
     flex-grow: 1;
-    font-size: 13vmin;
+    font-size: 10vmin;
+    padding: 4vmin 0;
 
     @media screen and (orientation: landscape) {
       align-items: flex-start;
@@ -60,6 +74,10 @@
         padding-left: unquote('max(0.2em, env(safe-area-inset-left))');
       }
     }
+
+    @media screen and (min-width: 1000px), (min-height: 1000px) {
+      font-size: 5rem;
+    }
   }
 
   .card {
@@ -71,12 +89,16 @@
     justify-content: center;
     flex-direction: column;
     flex-grow: 1;
-    font-size: 10vmin;
+    font-size: 11vmin;
     padding: 1em;
 
     @media screen and (orientation: landscape) {
       height: 100vh;
       width: 40vw;
+    }
+
+    @media screen and (min-width: 1000px), (min-height: 1000px) {
+      font-size: 4rem;
     }
   }
 
@@ -101,8 +123,16 @@
   }
 
   p {
-    font-size: 1rem;
+    font-size: 5vmin;
     opacity: 0.7;
     margin-top: 0.4em;
+
+    @media screen and (min-width: 1000px), (min-height: 1000px) {
+      font-size: 2rem;
+    }
+  }
+
+  footer {
+    padding-bottom: env(safe-area-inset-bottom);
   }
 </style>
