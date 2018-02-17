@@ -1,0 +1,57 @@
+:root {
+  --dark-gray: rgb(39, 39, 39);
+  --mid-gray: #747474;
+  --orange: #FF652F;
+  --yellow: rgb(255, 228, 0);
+  --green: #14A76C;
+  --light-gray: #eee;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  touch-action: manipulation;
+  color: #fff;
+  background-color: var(--dark-gray);
+  font-size: 24px;
+  font-family: 'Teko', system-ui, sans-serif;
+  letter-spacing: 0.05em;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body.flash {
+  animation: flash-screen 600ms ease-in-out;
+}
+
+@keyframes flash-screen {
+  0% { background-color: rgb(39, 39, 39)}
+  50% { background-color: rgb(120, 39, 39)}
+  100% { background-color: rgb(39, 39, 39)}
+}
+
+
+b {
+  font-weight: 700;
+}
+
+svg {
+  fill: currentColor;
+}
+
+input {
+  border-radius: 0;
+  font-family: inherit;
+}
+
+button {
+  cursor: pointer;
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+  background-color: var(--mid-gray);
+  border: none;
+  padding: 1em;
+}

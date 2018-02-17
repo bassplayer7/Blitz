@@ -1,0 +1,46 @@
+$blue: rgb(30, 136, 229);
+$orange: rgb(244, 81, 30);
+$yellow: rgb(253, 216, 53);
+$green: rgb(67, 160, 71);
+$white: #fff;
+
+$offset-background: #eee;
+$light-gray: #d8d8d8;
+$mid-gray: #aaa;
+$dark-gray: #505050;
+
+$font-family-sans: 'Lato', sans-serif;
+$font-family-serif: 'Permanent Marker', cursive, sans-serif;
+
+$font-bold: 700;
+$font-default: 400;
+
+$border-radius: 4px;
+$border-heavy: 4px;
+
+:root {
+  --blue: $blue;
+  --blue-r: 30;
+  --blue-g: 136;
+  --blue-b: 229;
+
+  --orange: $orange;
+  --orange-r: 244;
+  --orange-g: 81;
+  --orange-b: 30;
+
+  --yellow: $yellow;
+  --yellow-r: 253;
+  --yellow-g: 216;
+  --yellow-b: 53;
+
+  --green: $green;
+  --green-r: 67;
+  --green-g: 160;
+  --green-b: 71;
+
+  --player-color: $mid-gray;
+  --player-color-r: $mid-gray;
+  --player-color-g: $mid-gray;
+  --player-color-b: $mid-gray;
+}

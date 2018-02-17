@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Card Game Scoreboard | Track Card Game Scores Easily!</title>
+    <meta name="viewport" content="initial-scale=1.0,width=device-width,minimum-scale=1" />
+    <link rel="stylesheet" href="assets/css/styles.css" />
+    <link href="https://fonts.googleapis.com/css?family=Permanent+Marker" rel="stylesheet">
+    <link rel="icon" type="image/png" href="assets/images/site-icon.png"/>
+    <link rel="apple-touch-icon" href="assets/images/touch-icon.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="assets/images/touch-icon-large.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/touch-icon-very-large.png">
+    <meta name="description" content="Easily keep track of card game scores with this site that is optimized for mobile devices. No more paper and math to keep track of your score."/>
+    <meta property="og:title" content="Easily track card game scores" />
+    <meta property="og:description" content="No more paper scoring! Keep track of card game scores with ease. A scoreboard shows current game information and who is leading."/>
+    <meta property="og:image" content="assets/images/touch-icon-very-large.png" />
+    <meta property="og:url" content="https://bassplayer7.github.io/blitz/" />
+    <meta name="theme-color" content="#025176">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="google-site-verification" content="94xYsQZduVkTW3iyIdoe__MKVzRRAW8kxH4VaVsXClE" />
+    <link rel="manifest" href="/manifest.json">
+</head>
+<body>
+<header>
+    <h1><a href="/"><span class="title__first">Card</span> <span class="title__second">Game</span> <span class="title__third">Scores</span></a></h1>
+</header>
+
+<div data-bind="with: score" class="scoreboard__block">
+    <div class="scoreboard__wrapper" data-bind="css: {'is-active': !$root.gameInSetupMode() }">
+        <div class="scoreboard">
+            <div class="scoreboard__item">
+                <span class="scoreboard__label">Points Left</span>
+                <b class="scoreboard__data" data-bind="text: remainingPoints"></b>
+            </div>
+            <div class="scoreboard__item" data-bind="css: { 'is-hidden--fade': !leadPlayerName() }">
+                <span class="scoreboard__label">Lead Player</span>
+                <b class="scoreboard__data" data-bind="text: leadPlayerName()"></b>
+            </div>
+            <div class="scoreboard__item" data-bind="with: $root.round">
+                <span class="scoreboard__label">Round</span>
+                <b class="scoreboard__data">#<span data-bind="text: currentRound"></span></b>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <ul class="game js-game-players" data-bind="foreach: players">
+        <li class="game__player player" data-bind="swipe: swipeGesture, css: { 'player--highest': leadScore, 'player--tied': tiedScore, 'player--move-left': swipeResult() == 'left' }, attr: { style: colorVariable() }">
+            <div class="player__primary-content">
+                <div class="player__name">
+                    <label data-bind="attr: { for: elementId }, visible: !editingName(), click: editName" class="player__name-group">
+                        <span data-bind="text: name" class="player__name-text"></span>
+                        <span class="player__status-note player__status-note--leading">(leading)</span>
+                        <span class="player__status-note player__status-note--tied">(tied)</span>
+                    </label>
+                    <input type="text" data-bind="textInput: name, attr: { id: elementId }, visible: editingName, hasFocus: editingName" title="Player Name" placeholder="Add Player's Name" class="player__name-input"/>
+                </div>
+                <div class="player__score-block" data-bind="css: { 'has-empty-score': scoreInputIsEmpty() }">
+                    <div class="player__score-entry">
+                        <!-- click: minusScore, -->
+                        <button type="button" data-bind="event: { mouseup: minusScore, touchstart: minusScore }" class="player__score-button player__score-button--minus" title="Subtract points from score">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 9 9" class="player__score-icon">
+                                <title>Subtract Score</title>
+                                <rect y="3.5" width="9" height="2"/>
+                            </svg>
+                        </button>
+                        <input type="tel" title="Player Score" data-bind="value: roundScore, textInput: scoreInput, event: { focusout: $root.centerGame, focus: $root.scoreBeingEntered }" placeholder="Points" class="player__score-input"/>
+                        <button type="button" data-bind="click: addScore" class="player__score-button player__score-button--add" title="Add Points to Score">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 9 9" class="player__score-icon">
+                                <title>Add Score</title>
+                                <rect x="3.5" width="2" height="9"/>
+                                <rect y="3.5" width="9" height="2"/>
+                            </svg>
+                        </button>
+                    </div>
+
+                    <div class="player__color" data-bind="click: changeColor"></div>
+
+                    <div class="player__score" data-bind="click: toggleAllScoreVisibility">
+                        <div data-bind="text: renderRoundScore, css: { 'is-active': showRoundScore }" class="player__round-score"></div>
+                        <div data-bind="text: currentScore" class="player__full-score"></div>
+                    </div>
+                </div>
+
+                <div class="score-list" data-bind="visible: allScoresVisible">
+                    <div class="score-list__title">Scores:</div>
+                    <div class="score-list__table">
+                        <div class="score-list__item">
+                            <strong class="score-list__value">Round</strong>
+                            <strong class="score-list__value">Total</strong>
+                        </div>
+                        <ul data-bind="foreach: allScores">
+                            <li class="score-list__item">
+                                <span data-bind="text: round" class="score-list__value score-list__value--round"></span>
+                                <span data-bind="text: total" class="score-list__value score-list__value--total"></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <button type="button" data-bind="click: $root.removePlayer" class="player__delete">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 21 21" class="player__delete-icon">
+                    <title>close</title>
+                    <path d="M2.37,18.63,18.63,2.37M19,19,2,2" style="stroke-linecap: square; stroke-width: 5px;"/>
+                </svg>
+            </button>
+        </li>
+    </ul>
+
+    <div data-bind="with: round" class="complete-game">
+        <button type="button" data-bind="click: forceCompleteGame, visible: canCompleteGame()" class="complete-game__button">Finish Game</button>
+    </div>
+
+    <div class="secondary-action">
+        <div class="secondary-action__item">
+            <button type="button" data-bind="click: undoLastScore, visible: !gameFirstView()" class="add-game-player">Undo</button>
+            <button type="button" data-bind="click: addPlayer, visible: !gameFirstView()" class="add-game-player">
+                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 9 9" class="add-game-player__icon">
+                    <title>Add Score</title>
+                    <rect x="3.5" width="2" height="9"/>
+                    <rect y="3.5" width="9" height="2"/>
+                </svg>New Player</button>
+        </div>
+    </div>
+
+    <div class="win-points__wrapper">
+        <div class="win-points" data-bind="with: score">
+            <label for="win-points" class="win-points__label">Points required to win:</label>
+            <input type="tel" id="win-points" data-bind="value: gameEndScore" class="win-points__input" />
+        </div>
+    </div>
+
+    <div class="game-action">
+        <button type="button" data-bind="click: newGame, visible: !gameInSetupMode()" class="game-action__item new-game">Reset Game</button>
+        <button type="button" data-bind="click: resetGame, visible: !gameInSetupMode()" class="game-action__item reset-game">Clear Scores</button>
+    </div>
+
+    <div data-bind="with: complete">
+        <div class="win-splash" data-bind="css: { 'win-splash--visible' : showWinnerModal, 'win-splash--closing': winnerModalClosing }">
+            <button type="button" class="win-splash__close" data-bind="click: closeModalAction">
+                <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" viewBox="0 0 21 21" class="win-splash__close-icon">
+                    <title>close</title>
+                    <path d="M2.37,18.63,18.63,2.37M19,19,2,2" style="stroke-linecap: square;stroke-width: 2px"/>
+                </svg>
+            </button>
+            <div class="win-splash__hero">
+                <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px" y="0px" viewBox="0 0 90 112.5" enable-background="new 0 0 90 90" xml:space="preserve" class="win-splash__icon"><rect x="27.886" y="78.089" width="30.995" height="2.933"/><rect x="23.682" y="82.329" width="39.403" height="7.671"/><path d="M52.207,63.597l-0.109-0.015c-2.506-0.354-4.431-2.505-4.431-5.108V44.459h-2.899H42h-2.899v14.014  c0,2.604-1.926,4.755-4.431,5.108l-0.109,0.015c-2.032,0.445-3.554,2.257-3.554,4.424v8.361h8.964h2.986h12.804v-8.361  C55.761,65.854,54.239,64.042,52.207,63.597z"/><path d="M58.688,37.33l-1.993-4.676c12.86-5.482,14.602-16.589,14.726-21.373H57.691V6.199h18.45l0.262,2.246  C76.428,8.648,78.554,28.862,58.688,37.33z"/><path d="M28.08,37.33C8.214,28.862,10.34,8.648,10.363,8.445l0.263-2.246h18.45v5.083h-13.73  c0.124,4.778,1.861,15.889,14.726,21.373L28.08,37.33z"/><path d="M25.741,0.667v5.126v31.902c0,4.875,3.952,8.826,8.826,8.826h17.635c4.873,0,8.826-3.952,8.826-8.826V5.793V0.667H25.741z   M48.505,29.747l-5.121-2.692l-5.121,2.692l0.978-5.703l-4.143-4.038l5.726-0.832l2.56-5.188l2.56,5.188l5.726,0.832l-4.144,4.038 L48.505,29.747z"/></svg>
+            </div>
+            <div class="win-splash__winner-info">
+                <div class="win-splash__winner-prefix">Congratulations!</div>
+                <div class="win-splash__winner" data-bind="text: $root.score.leadPlayerName"></div>
+                <div class="win-splash__explanatory">You won with <span data-bind="text: $root.score.topScore"></span> points!</div>
+            </div>
+            <button type="button" class="win-splash__action" data-bind="click: closeAndReset">Play Again</button>
+        </div>
+    </div>
+
+    <div class="user-help">
+        <div class="user-help__actions">
+            <span role="button" class="user-help__action" data-bind="click: toggleUserHelp">Tips</span>
+            <a target="_blank" rel="noopener" class="user-help__action" href="https://www.amazon.com/gp/product/B000BBU0KS/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=B000BBU0KS&linkCode=as2&tag=bluegpiano-20&linkId=90f961303eef30fa6727bd1871ccfd62" onclick="ga('send', 'event', 'Link', 'Outbound', 'Amazon Affiliate');">Purchase the game <img src="//ir-na.amazon-adsystem.com/e/ir?t=bluegpiano-20&l=am2&o=1&a=B000BBU0KS" width="1" height="1" border="0" alt="" style="border:none !important; margin:0 !important;" /></a>
+        </div>
+        <div class="user-help__content" data-bind="css: {'is-visible': tipsVisible }">
+            <h4>Tips</h4>
+            <ul class="user-help__tips">
+                <li>Tap score to change player's color. Now you can match your color with your card color.</li>
+                <li>Use the up/down arrows above your keyboard to move from score to score. It will assume it is a positive score.</li>
+                <li>Your game is always saved to your device. Go ahead and Google to find out the only planet that turns clockwise and then pick up here where you left off.</li>
+            </ul>
+        </div>
+
+        <p style="margin-top: 1.25em">This app makes keeping track of card game's score incredibly easy. Simply create players above and enter scores for each one, every round. You can tap the colored box that contains their current score in order to change their color, if that is helpful. For card games where each player has a different colored deck, this allows you to easily match the color displayed with the color on the back of their deck of cards.</p>
+        <p style="margin-top: 1.25em"><b>Note:</b> while this score tracking app works well with games such as Dutch Blitz&reg;, it is not affiliated with, nor endorsed by Dutch Blitz&reg; in any way. This score keeping app will work with any game that is played with multiple players where score is tracked over a period of time. It is open source and was built completely independently. Enjoy!</p>
+    </div>
+</section>
+
+<script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-66194702-2', 'auto');
+    ga('send', 'pageview');
+</script>
+
+<footer>
+    <p>Developed by Jesse Maxwell (<a href="https://swiftotter.com" onclick="ga('send', 'event', 'Link', 'Outbound', 'SwiftOtter');">SwiftOtter Studios</a>)</p>
+
+    <p><a href="https://github.com/bassplayer7/Blitz/issues" onclick="ga('send', 'event', 'Link', 'Outbound', 'Github Issues');">Ping me</a> to suggest an enhancement or report a bug.</p>
+    <p><a href="credits.html" class="credits">Credits / Info</a></p>
+</footer>
+
+<script data-main="js/init" src="js/lib/require.js" defer></script>
+<script src="js/lib/smoothscroll.js" defer></script>
+</body>
+</html>
