@@ -1,21 +1,11 @@
-# jesse-maxwell
+# JesseMaxwell.com Code
 
-> Apps built by Jesse Maxwell
+> This is the code for apps built by Jesse Maxwell. That's me. I say "apps" because there are two. One was built with KnockoutJS (/blitz) and everything else was built more recently using VueJS.
 
 ## Build Setup
 
-``` bash
-# install dependencies
-npm install
+It's all classic VueJS CLI stuff, so to build: `yarn run dev`, or `yarn run build`. 
 
-# serve with hot reload at localhost:8080
-npm run dev
+## The Other Details
 
-# build for production with minification
-npm run build
-
-# build for production and view the bundle analyzer report
-npm run build --report
-```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+This is one project where I don't worry about supporting older browsers. That's pretty nice for me. Of course, if you are using Internet Explorer, well, it won't work too great.
