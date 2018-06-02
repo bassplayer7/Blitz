@@ -4,15 +4,18 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Caffeine from '@/lib/caffeine'
+import store from './store/index'
 
 Vue.config.productionTip = false
 
 Vue.use(Caffeine)
 
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })
@@ -20,7 +23,6 @@ new Vue({
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/sw.js').then(registration => {
-      debugger;
       console.log('SW registered: ', registration);
     }).catch(registrationError => {
       console.log('SW registration failed: ', registrationError);

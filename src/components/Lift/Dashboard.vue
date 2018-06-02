@@ -1,42 +1,52 @@
 <template>
   <div class="dashboard">
-    <header>
-      <router-link to="/" class="logo" @click.stop>J</router-link>
-    </header>
+    <lift-header/>
     <div class="timing" @click="startBreak">
       <div class="descriptor"><b>{{ completeRounds }}</b> completed</div>
       <div class="elapsed-time" :style="redColor">{{ breakElapsed }}</div>
       <button type="button" class="go" @click.stop="startBreak">Start Break</button>
     </div>
-    <div class="actions">
-      <div class="duration-setting">
+
+    <transition name="settings">
+      <div class="duration-setting" v-if="!showActions">
         <!-- TODO: properly inline SVG -->
         <!--<img src="@/assets/icons/timer.svg" alt="Break Duration"/>-->
-        <input v-model="breakLimit" title="Break Duration" class="duration"/>
+        <input :value="breakLimit" title="Break Duration" class="duration" @blur="updateBreakLimit" @focus="allowTimerStart = false"/>
         <span>/s</span>
       </div>
+    </transition>
+
+    <div class="actions" :class="{ 'is-active': showActions }">
       <button type="button" @click="clear" class="clear">Clear</button>
-      <button type="button" @click="togglePause" class="pause"><span v-if="!isPaused">Pause</span><span v-else>Resume</span></button>
+      <button type="button" @click="togglePause" class="pause">
+        <span v-if="!isPaused">Pause</span>
+        <span v-else>Resume</span>
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-  import Vue from 'vue';
+  import LiftHeader from "./Header";
 
   export default {
-    name: 'dashboard',
+    components: {LiftHeader}, name: 'dashboard',
     data() {
       return {
         intervalId: null,
-        breakLimit: 90,
         rounds: [],
-        timeCounter: 90,
+        timeCounter: parseInt(this.$store.state.breakLimit || 90),
         overtimeToggle: false,
-        isPaused: false
+        isPaused: false,
+        timeRunning: false,
+        allowTimerStart: true
       }
     },
     computed: {
+      breakLimit() {
+        return this.$store.state.breakLimit;
+      },
+
       breakElapsed() {
           return `${this.timeCounter}s`;
 
@@ -45,6 +55,9 @@
           } else {
               return `${Math.floor(this.timeCounter / 60)}m ${this.timeCounter % 60}s`;
           }
+      },
+      showActions() {
+        return this.rounds.length > 0 || this.timeCounter < this.breakLimit || this.timeRunning;
       },
       redColor() {
         const percentComplete = 1 - (this.timeCounter / this.breakLimit);
@@ -64,12 +77,39 @@
       }
     },
 
+    watch: {
+      isPaused(newValue) {
+        if (newValue) document.body.classList.remove('flash');
+      },
+
+      timeCounter(newValue) {
+        if (!this.isPaused && newValue < 0) {
+          document.body.classList.add('flash');
+        } else {
+          document.body.classList.remove('flash');
+        }
+      }
+    },
+
     methods: {
+      updateBreakLimit(newValue) {
+        this.$store.commit('updateBreakLimit', parseInt(newValue.target.value || 90));
+        this.$nextTick(() => {
+          this.allowTimerStart = true;
+          this.timeCounter = this.breakLimit;
+        });
+      },
       startBreak() {
-        this.finishRound();
-        window.clearInterval(this.intervalId);
-        this.timeCounter = this.breakLimit;
-        this.startTimer();
+        if (!this.allowTimerStart) return;
+
+        if (this.isPaused) {
+          this.startTimer();
+          this.isPaused = false;
+        } else {
+          this.finishRound();
+          this.timeCounter = this.breakLimit;
+          this.startTimer();
+        }
       },
       finishRound() {
         this.rounds.push({
@@ -78,22 +118,13 @@
       },
       startTimer() {
         window.clearInterval(this.intervalId);
+        this.timeRunning = true;
         this.stayAwake();
         this.intervalId = window.setInterval(() => {
           this.timeCounter--;
-
-          if (this.timeCounter < 0) this.flash();
         }, 1000);
       },
-      flash() {
-        this.overtimeToggle = !this.overtimeToggle;
 
-        if (this.overtimeToggle) {
-            document.body.classList.add('flash');
-        } else {
-          document.body.classList.remove('flash');
-        }
-      },
       togglePause() {
         if (this.isPaused) {
           this.startTimer();
@@ -107,53 +138,42 @@
       clear() {
         this.rounds = [];
         window.clearInterval(this.intervalId);
+        this.timeRunning = false;
         this.timeCounter = this.breakLimit;
         this.allowSleep();
+      },
+      shutdown() {
+        document.body.classList.remove('is-fixed');
+        document.body.classList.remove('flash');
+
+        this.$store.commit('updateRoundStatus', {
+          transientBreak: this.timeCounter,
+          rounds: this.rounds
+        });
       }
     },
+    beforeMount() {
+      document.body.classList.add('is-fixed');
+    },
+    mounted() {
+      const diff = Math.abs(new Date() - new Date(this.$store.state.roundTimestamp)) / (60*60*1000);
+
+      if (this.$store.state.transientBreak && diff < 12) {
+        this.timeCounter = this.$store.state.transientBreak;
+        this.rounds = this.$store.state.rounds;
+        this.$store.commit('clearRoundStatus');
+        this.isPaused = true;
+      }
+
+      window.onunload = this.shutdown.bind(this);
+    },
     beforeDestroy() {
-      window.clearInterval(this.intervalId);
+      this.shutdown();
     }
   }
 </script>
 
 <style scoped lang="scss">
-  header {
-    position: fixed;
-    top: 0.5em;
-    left: 0.5em;
-  }
-
-  .logo {
-    color: var(--light-gray);
-    text-shadow: 0 0 25px rgba(255, 255, 255, 1);
-    background-color: rgba(255,255,255,0.3);
-    width: 1.4em;
-    height: 1.4em;
-    padding-top: 0.2em;
-    border: 2px solid var(--light-gray);
-    box-shadow: 0 0 5px rgba(255, 255, 255, 0.3) inset;
-    border-radius: 50%;
-    text-decoration: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 1.5em;
-    animation: flash-logo 900ms ease-in-out;
-    animation-fill-mode: forwards;
-  }
-
-  @keyframes flash-logo {
-    0% {
-      text-shadow: 0 0 25px rgba(255, 255, 255, 1);
-      background-color: rgba(255,255,255,0.3);
-    }
-    100% {
-      text-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
-      background-color: rgba(255,255,255,0.05);
-    }
-  }
-
   .dashboard {
     flex-grow: 1;
     display: flex;
@@ -207,12 +227,40 @@
   }
 
   .duration-setting {
-    position: relative;
+    position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
     grid-column: 1 / -1;
-    padding-bottom: 8vmin;
+    transform: rotateY(0deg) scale(1);
+    transition: transform 300ms ease-out;
+    transform-origin: left;
+
+    @media screen and (orientation: portrait) {
+      width: 100%;
+      bottom: 0;
+    }
+
+    @media screen and (orientation: landscape) {
+      padding: 0;
+      height: 100%;
+      right: 0;
+    }
+  }
+
+  .settings-enter,
+  .settings-leave-to {
+    @media screen and (orientation: portrait) {
+      transform: rotateX(-90deg) scale(0.94);
+    }
+
+    @media screen and (orientation: landscape) {
+      transform: rotateY(-90deg) scale(0.94);
+    }
+  }
+
+  .settings-enter-active {
+    transition-delay: 200ms;
   }
 
   .duration-setting > img {
@@ -241,10 +289,27 @@
     bottom: 0;
     width: 100%;
     grid-template-columns: 3fr 5fr;
+    transition: transform 300ms ease-out 100ms;
+
+    @media screen and (orientation: portrait) {
+      transform: rotateX(-90deg) translateY(-10%) scale(0.92);
+    }
 
     @media screen and (orientation: landscape) {
+      transform-origin: right;
+      transform: rotateY(-90deg) translateX(-10%) scale(0.92);
       grid-template-columns: 1fr;
       width: auto;
+    }
+  }
+
+  .actions.is-active {
+    @media screen and (orientation: portrait) {
+      transform: rotateX(0) translateY(0) scale(1);
+    }
+
+    @media screen and (orientation: landscape) {
+      transform: rotateY(0) translateX(0) scale(1);
     }
   }
 
@@ -252,8 +317,10 @@
     display: block;
 
     @supports (padding-bottom: max(0px)) {
-      padding-top: unquote('max(1em, env(safe-area-inset-bottom))');
-      padding-bottom: unquote('max(1em, env(safe-area-inset-bottom))');
+      padding-top: unquote('max(1.5em, env(safe-area-inset-top))');
+      padding-bottom: unquote('max(1.5em, env(safe-area-inset-bottom))');
+      padding-left: unquote('max(1.5em, env(safe-area-inset-left))');
+      padding-right: unquote('max(1.5em, env(safe-area-inset-right))');
     }
   }
 
